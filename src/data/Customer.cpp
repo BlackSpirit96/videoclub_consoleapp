@@ -1,6 +1,6 @@
 #include "Customer.h"
 
-Customer::Customer(string id, string firstName, string lastName, string dateOfBirth, string genderText, string adress, int phoneNumber)
+Customer::Customer(string id, string firstName, string lastName, string dateOfBirth, string genderText, string adress, string phoneNumber)
 {
 	this->id = id;
 	this->firstName = firstName;
@@ -68,7 +68,7 @@ string Customer::getLastName()
     return lastName;
 }
 
-int Customer::getPhoneNumber()
+string Customer::getPhoneNumber()
 {
     return phoneNumber;
 }
@@ -98,7 +98,7 @@ void Customer::setLastName(string lastName)
     this->lastName = lastName;
 }
 
-void Customer::setPhoneNumber(int phoneNumber)
+void Customer::setPhoneNumber(string phoneNumber)
 {
     this->phoneNumber = phoneNumber;
 }
