@@ -9,21 +9,18 @@
 #include "data/Items/Game.h"
 #include "data/Items/Media/Movie.h"
 #include "data/Items/Media/Drama.h"
-//listClasses
-
-// todo list:customerList
-// todo list:itemList
-// todo list:rentList
+//other
+#include "dynamicArray.h"
 
 using namespace std;
 
 
-void loadData(CustomerList &customers, ItemList &games, ItemList &movies, ItemList &drama, RentList &rents)
+void loadData(DynamicArray<Customer> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
 	// todo other:load data
 }
 
-void insertGame(ItemList &games)
+void insertGame(DynamicArray<Game> &games)
 {
 	int id, year;
 	string serial, title, genre, console;
@@ -39,10 +36,11 @@ void insertGame(ItemList &games)
 	cin>>console;
 	cout<<"Enter game production year: ";
 	cin>>year;
-	games.add(Game(id, serial, title, genre, year, console));
+	Game newGame(id, serial, title, genre, year, console);
+	games.insert(newGame);
 }
 
-void insertMovie(ItemList &movies)
+void insertMovie(DynamicArray<Movie> &movies)
 {
 	int id, year;
 	string serial, title, genre, director, actors;
@@ -72,14 +70,15 @@ void insertMovie(ItemList &movies)
 		dvdc = tolower(dvdc);
 	}
 	cout<<"Enter movie duration (hour min sec) : ";
-	cin>>duration.hour>>duration.min>>duration.sec;
-	movies.add(Movie(id,serial, title, genre, year, director, actors, dvdc == 'y', duration));
+	cin>>duration.hours>>duration.minutes>>duration.seconds;
+	movies.insert(Movie(id,serial, title, genre, year, director, actors, dvdc == 'y', duration));
+	return;
 }
 
-void insertDrama(ItemList &drama)
+void insertDrama(DynamicArray<Drama> &drama)
 {
 	int id, year, season;
-	string serial, title, genre, irector, actors;
+	string serial, title, genre, director, actors;
 	struct range episodes;
 	char dvdc;
 	cout<<"Enter drama id : ";
@@ -109,10 +108,10 @@ void insertDrama(ItemList &drama)
 	cin>>season;
 	cout<<"Enter drama episode rage(start stop): ";
 	cin>>episodes.start>>episodes.end;
-	drama.add(Drama(id, serial, title, genre, year, director, actors, dvd, searson, episodes));
+	drama.insert(Drama(id, serial, title, genre, year, director, actors, dvdc == 'y', season, episodes));
 }
 
-void gamesMenu(ItemList &games)
+void gamesMenu(DynamicArray<Game> &games)
 {
 	char choice;
 	while (true)
@@ -128,12 +127,12 @@ void gamesMenu(ItemList &games)
 		if (choice == '1')
 		{
 			cout<<"======< Games List >======"<<endl;
-			games.show();
+			games.print();
 		}
 		else if (choice == '2')
 		{
 			cout<<"======< New Game >======"<<endl;
-			insertGame(ItemList &games);
+			insertGame(games);
 		}
 		else if (choice == '3')
 		{
@@ -144,7 +143,7 @@ void gamesMenu(ItemList &games)
 			games.printSearch(id);
 			games.remove(id);
 			cout<<"Enter new game data."<<endl;
-			insertGame(ItemList &games);
+			insertGame(games);
 		}
 		else if (choice == '4')
 		{
@@ -159,7 +158,7 @@ void gamesMenu(ItemList &games)
 	}
 }
 
-void moviesMenu(ItemList &movies)
+void moviesMenu(DynamicArray<Movie> &movies)
 {
 	char choice;
 	while (true)
@@ -175,12 +174,12 @@ void moviesMenu(ItemList &movies)
 		if (choice == '1')
 		{
 			cout<<"======< Movies List >======"<<endl;
-			movies.show();
+			movies.print();
 		}
 		else if (choice == '2')
 		{
 			cout<<"======< New movie >======"<<endl;
-			insertMovie(ItemList &movies);
+			insertMovie(movies);
 		}
 		else if (choice == '3')
 		{
@@ -191,7 +190,7 @@ void moviesMenu(ItemList &movies)
 			movies.printSearch(id);
 			movies.remove(id);
 			cout<<"Enter new movie data."<<endl;
-			insertMovie(ItemList &movies);
+			insertMovie(movies);
 		}
 		else if (choice == '4')
 		{
@@ -206,7 +205,7 @@ void moviesMenu(ItemList &movies)
 	}
 }
 
-void dramaMenu(ItemList &drama)
+void dramaMenu(DynamicArray<Drama> &drama)
 {
 	char choice;
 	while (true)
@@ -222,12 +221,12 @@ void dramaMenu(ItemList &drama)
 		if (choice == '1')
 		{
 			cout<<"======< Drama List >======"<<endl;
-			drama.show();
+			drama.print();
 		}
 		else if (choice == '2')
 		{
 			cout<<"======< New movie >======"<<endl;
-			insertDrama(ItemList &drama);
+			insertDrama(drama);
 		}
 		else if (choice == '3')
 		{
@@ -238,7 +237,7 @@ void dramaMenu(ItemList &drama)
 			drama.printSearch(id);
 			drama.remove(id);
 			cout<<"Enter new drama data."<<endl;
-			insertMovie(ItemList &drama);
+			insertDrama(drama);
 		}
 		else if (choice == '4')
 		{
@@ -253,7 +252,7 @@ void dramaMenu(ItemList &drama)
 	}
 }
 
-void itemMenu(ItemList &games, ItemList &movies, ItemList &drama)
+void itemMenu(DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama)
 {
 	char choice;
 	while(true)
@@ -276,7 +275,7 @@ void itemMenu(ItemList &games, ItemList &movies, ItemList &drama)
 	}
 }
 
-void insertCustomer(CustomerList &customers)
+void insertCustomer(DynamicArray<Customer> &customers)
 {
 	string id, firstName, lastName, dateOfBirth, gender, address, phoneNumber;
 	string creditCardNumber, issuingNetwork;
@@ -311,15 +310,15 @@ void insertCustomer(CustomerList &customers)
 		cin>>issuingNetwork;
 		cout<<"Enter cradit card cvv number: ";
 		cin>>cvv;
-		customers.add(VIP(id, fistName, lastName, dateOfBirth, gender, address, phoneNumber, creditCardNumber, issuingNetwork, cvv));
+		customers.insert(VIP(id, firstName, lastName, dateOfBirth, gender, address, phoneNumber, creditCardNumber, issuingNetwork, cvv));
 	}
 	else
 	{
-		customers.add(Customer(id, fistName, lastName, dateOfBirth, gender, address, phoneNumber));
+		customers.insert(Customer(id, firstName, lastName, dateOfBirth, gender, address, phoneNumber));
 	}
 }
 
-void customerMenu(CustomerList &customers)
+void customerMenu(DynamicArray<Customer> &customers)
 {
 	while(true)
 	{
@@ -335,12 +334,12 @@ void customerMenu(CustomerList &customers)
 		if (choice == '1')
 		{
 			cout<<"======< Customers List >======"<<endl;
-			customers.show();
+			customers.print();
 		}
 		else if (choice == '2')
 		{
 			cout<<"======< New Customer >======"<<endl;
-			insertCustomer(CustomerList &customers);
+			insertCustomer(customers);
 		}
 		else if (choice == '3')
 		{
@@ -351,7 +350,7 @@ void customerMenu(CustomerList &customers)
 			customers.printSearch(id);
 			customers.remove(id);
 			cout<<"Enter new customer data."<<endl;
-			insertCustomer(CustomerList &customers);
+			insertCustomer(customers);
 		}
 		else if (choice == '4')
 		{
@@ -366,7 +365,7 @@ void customerMenu(CustomerList &customers)
 	}
 }
 
-void rentMenu(CustomerList &customers, RentList &rents)
+void rentMenu(DynamicArray<Customer> &customers, DynamicArray<Rent> &rents)
 {
 	char choice;
 	while(true)
@@ -389,7 +388,7 @@ void rentMenu(CustomerList &customers, RentList &rents)
 			cin>>itemSerial;
 			cout<<"Enter day: ";
 			cin>>date.day>>date.month>>date.year;
-			rents.add(Rent(customerID, itemSerial, date, customers.search(customerID).isVIP(), "game"));
+			rents.insert(Rent(customerID, itemSerial, date, customers.search(customerID)->isVIP(), "game"));
 		}
 		else if (choice == '2')
 		{
@@ -401,7 +400,7 @@ void rentMenu(CustomerList &customers, RentList &rents)
 			cin>>itemSerial;
 			cout<<"Enter day: ";
 			cin>>date.day>>date.month>>date.year;
-			rents.add(Rent(customerID, itemSerial, date, customers.search(customerID).isVIP(), "movie"));
+			rents.insert(Rent(customerID, itemSerial, date, customers.search(customerID)->isVIP(), "movie"));
 		}
 		else if (choice == '3')
 		{
@@ -413,14 +412,15 @@ void rentMenu(CustomerList &customers, RentList &rents)
 			cin>>itemSerial;
 			cout<<"Enter day: ";
 			cin>>date.day>>date.month>>date.year;
-			rents.add(Rent(customerID, itemSerial, date, customers.search(customerID).isVIP(), "drama"));
+			rents.insert(Rent(customerID, itemSerial, date, customers.search(customerID)->isVIP(), "drama"));
 		}
 		else if (choice == '4')
 		{
 			string itemSerial;
 			cout<<"Enter item serial number: ";
 			cin>>itemSerial;
-			cout<<"Checkout: "<<rents.search(itemSerial).checkout()<<endl; // todo I might place it in list
+			cout<<"Checkout: "<<rents.search(itemSerial)->checkout()<<endl;
+			rents.remove(itemSerial);
 		}
 		else if (choice == 'q')
 		{
@@ -429,7 +429,7 @@ void rentMenu(CustomerList &customers, RentList &rents)
 	}
 }
 
-void mainMenu(CustomerList &customers, ItemList &games, ItemList &movies, ItemList &drama, RentList &rents)
+void mainMenu(DynamicArray<Customer> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
 	char choice;
 	while(true)
@@ -452,17 +452,17 @@ void mainMenu(CustomerList &customers, ItemList &games, ItemList &movies, ItemLi
 	}
 }
 
-void saveData(CustomerList &customers, ItemList &games, ItemList &movies, ItemList &drama, RentList &rents)
+void saveData(DynamicArray<Customer> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
 	// todo other:save data
 }
 
 int main() {
-	CustomerList customers();
-	ItemList games();
-	ItemList movies();
-	ItemList drama();
-	RentList rents();
+	DynamicArray<Customer> customers(100);
+	DynamicArray<Game> games(100);
+	DynamicArray<Movie> movies(100);
+	DynamicArray<Drama> drama(100);
+	DynamicArray<Rent> rents(100);
 	loadData(customers, games, movies, drama, rents);
 	mainMenu(customers, games, movies, drama, rents);
 	saveData(customers, games, movies, drama, rents);

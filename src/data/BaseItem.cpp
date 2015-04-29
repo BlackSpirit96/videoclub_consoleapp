@@ -1,10 +1,3 @@
-/*
- * BaseItem.cpp
- *
- *  Created on: Apr 27, 2015
- *      Author: BlackSpirit
- */
-
 #include "BaseItem.h"
 
 BaseItem::BaseItem(int id, string serial, string title, string genre, int year)
@@ -14,6 +7,15 @@ BaseItem::BaseItem(int id, string serial, string title, string genre, int year)
 	this->title = title;
 	this->genre = genre;
 	this->year = year;
+}
+
+BaseItem::BaseItem()
+{
+	this->id = 0;
+	this->serial = "";
+	this->title = "";
+	this->genre = "";
+	this->year = 0;
 }
 
 string BaseItem::getGenre()
@@ -66,4 +68,22 @@ void BaseItem::setYear(int year)
     this->year = year;
 }
 
+ostream& BaseItem::print(ostream& mystream)
+{
+	return mystream<<id<<" "<<title<<" "<<serial<<" "<<genre<<" "<<year;
+}
 
+ostream &operator<<(ostream &mystream, BaseItem &item)
+{
+	return item.print(mystream)<<endl;
+}
+
+bool BaseItem::operator==(int number)
+{
+	return id == number;
+}
+
+bool BaseItem::operator==(string text)
+{
+	return title == text;
+}

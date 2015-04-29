@@ -2,11 +2,14 @@
 #define CUSTOMER_H_
 
 #include <string>
+#include <iostream>
+
 using namespace std;
 
 class Customer
 {
 public:
+	Customer();
 	Customer(string id, string firstName, string lastName, string dateOfBirth, string genderText, string adress, string phoneNumber);
     string getAdress();
     string getDateOfBirth();
@@ -22,7 +25,10 @@ public:
     void setId(string id);
     void setLastName(string lastName);
     void setPhoneNumber(string phoneNumber);
-	bool isVIP() { return false;}
+	virtual bool isVIP() { return false;}
+	bool operator==(string textID);
+	virtual ostream& print(ostream& mystream);
+	friend ostream &operator<<(ostream &mystream, Customer &client);
 private:
 	string id;
 	string firstName;

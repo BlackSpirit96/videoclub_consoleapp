@@ -1,5 +1,14 @@
 #include "Rent.h"
 
+Rent::Rent()
+{
+	this->customerID = "";
+	this->itemSerial = "";
+	this->date = Date();
+	this->vip = false;
+	setType("game");
+}
+
 Rent::Rent(std::string customerID, std::string itemSerial, Date date, bool vip, std::string type)
 {
 	this->customerID = customerID;
@@ -73,4 +82,19 @@ void Rent::setType(std::string type)
 void Rent::setVip(bool vip)
 {
     this->vip = vip;
+}
+
+bool Rent::operator==(std::string itemText)
+{
+	return itemSerial == itemText;
+}
+
+std::ostream& Rent::print(std::ostream& mystream)
+{
+	return mystream<<customerID<<" "<<itemSerial<<" "<<date<<" "<<vip<<" "<<getType();
+}
+
+std::ostream &operator<<(std::ostream &mystream, Rent &rent)
+{
+	return rent.print(mystream)<<std::endl;
 }

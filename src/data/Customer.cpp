@@ -1,5 +1,16 @@
 #include "Customer.h"
 
+Customer::Customer()
+{
+	this->id = "";
+	this->firstName = "";
+	this->lastName = "";
+	this->dateOfBirth = "";
+	setGender("other");
+	this->adress = "";
+	this->phoneNumber = "";
+}
+
 Customer::Customer(string id, string firstName, string lastName, string dateOfBirth, string genderText, string adress, string phoneNumber)
 {
 	this->id = id;
@@ -103,4 +114,18 @@ void Customer::setPhoneNumber(string phoneNumber)
     this->phoneNumber = phoneNumber;
 }
 
+bool Customer::operator==(string textID)
+{
+	return id == textID;
+}
+
+ostream& Customer::print(ostream& mystream)
+{
+	return mystream<<id<<" "<<firstName<<" "<<lastName<<" "<<dateOfBirth<<" "<<getGender()<<" "<<adress<<" "<<phoneNumber;
+}
+
+ostream &operator<<(ostream &mystream, Customer &client)
+{
+	return client.print(mystream)<<endl;
+}
 

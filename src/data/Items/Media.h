@@ -7,6 +7,7 @@
 class Media: public BaseItem
 {
 public:
+	Media();
 	Media(int id, string serial, string title, string genre, int year, string director, string actors, bool dvd);
     string getActors();
     string getDirector();
@@ -14,6 +15,7 @@ public:
     void setActors(string actors);
     void setDirector(string director);
     void setDvd(bool dvd);
+    virtual ostream& print(ostream& mystream);
 private:
 	string director;
 	string actors;

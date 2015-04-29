@@ -1,5 +1,13 @@
 #include "Drama.h"
 
+Drama::Drama()
+: Media()
+{
+	this->episodes.start = 0;
+	this->episodes.end = 0;
+	this->season = 0;
+}
+
 Drama::Drama(int id, string serial, string title, string genre, int year, string director, string actors, bool dvd, int season, struct range episodes)
 : Media(id, serial, title, genre, year, director, actors, dvd)
 {
@@ -27,4 +35,10 @@ void Drama::setSeason(int season)
     this->season = season;
 }
 
+ostream& Drama::print(ostream& mystream)
+{
+	Media::print(mystream);
+	mystream<<getSeason()<<" "<<episodes;
+	return mystream;
+}
 

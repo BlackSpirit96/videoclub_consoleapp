@@ -6,6 +6,7 @@
 class VIP: public Customer
 {
 public:
+	VIP();
 	VIP(string id, string firstName,
 			string lastName, string dateOfBirth,
 			string genderText, string adress,
@@ -18,6 +19,7 @@ public:
     void setCvv(int cvv);
     void setIssuingNetwork(string issuingNetwork);
 	bool isVIP() { return true;}
+	virtual ostream& print(ostream& mystream);
 private:
 	string credidCardNumber;
 	string issuingNetwork;

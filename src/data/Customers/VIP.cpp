@@ -1,5 +1,13 @@
 #include "VIP.h"
 
+VIP::VIP()
+: Customer()
+{
+	this->credidCardNumber = "";
+	this->issuingNetwork = "";
+	this->cvv = 0;
+}
+
 VIP::VIP(string id, string firstName,
 		string lastName, string dateOfBirth,
 		string genderText, string adress,
@@ -41,4 +49,9 @@ void VIP::setIssuingNetwork(string issuingNetwork)
     this->issuingNetwork = issuingNetwork;
 }
 
-
+ostream& VIP::print(ostream& mystream)
+{
+	Customer::print(mystream);
+	mystream<<" "<<credidCardNumber<<" "<<issuingNetwork<<" "<<isVIP();
+	return mystream;
+}

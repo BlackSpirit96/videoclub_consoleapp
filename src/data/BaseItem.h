@@ -2,12 +2,14 @@
 #define BASEITEM_H_
 
 #include <string>
+#include <iostream>
 using namespace std;
 
 class BaseItem
 {
 public:
 	BaseItem(int id, string serial, string title, string genre, int year);
+	BaseItem();
     string getGenre();
     int getId();
     string getSerial();
@@ -18,8 +20,12 @@ public:
     void setSerial(string serial);
     void setTitle(string title);
     void setYear(int year);
+    virtual ostream& print(ostream& mystream);
+    friend ostream &operator<<(ostream &mystream, BaseItem &item);
+    bool operator==(int number);
+    bool operator==(string text);
 private:
-	int id;
+    int id;
 	string serial;
 	string title;
 	string genre;
