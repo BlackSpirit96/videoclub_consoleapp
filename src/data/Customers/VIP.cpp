@@ -3,7 +3,7 @@
 VIP::VIP(string id, string firstName,
 		string lastName, string dateOfBirth,
 		string genderText, string adress,
-		int phoneNumber, string credidCardNumber,
+		string phoneNumber, string credidCardNumber,
 		string issuingNetwork, int cvv) : Customer(id, firstName, lastName, dateOfBirth, genderText, adress, phoneNumber)
 {
 	this->credidCardNumber = credidCardNumber;

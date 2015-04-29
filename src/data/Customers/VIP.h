@@ -9,7 +9,7 @@ public:
 	VIP(string id, string firstName,
 			string lastName, string dateOfBirth,
 			string genderText, string adress,
-			int phoneNumber, string credidCardNumber,
+			string phoneNumber, string credidCardNumber,
 			string issuingNetwork, int cvv);
     string getCredidCardNumber();
     int getCvv();
