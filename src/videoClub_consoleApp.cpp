@@ -21,6 +21,21 @@ void loadData(DynamicArray<Customer> &customers, DynamicArray<Game> &games, Dyna
 	// todo other:load data
 }
 
+bool getInput(string message)
+{
+	char choice;
+	cout<<message;
+	do
+	{
+		cin.get(choice);
+		choice = tolower(choice);
+	} while (choice != 'y' || choice != 'n');
+	if (choice == 'y')
+		return true;
+	else
+		return false;
+}
+
 void insertGame(DynamicArray<Game> &games)
 {
 	int id, year;
@@ -112,6 +127,20 @@ void insertDrama(DynamicArray<Drama> &drama)
 	drama.insert(Drama(id, serial, title, genre, year, director, actors, dvdc == 'y', season, episodes));
 }
 
+template <typename A, class B, class C>
+void showAvailable(A id, B &list, C type)
+{
+	C *table;
+	int tableSize = 0;
+	list.returnSearch(id, table, tableSize);
+	for (int i = 0; i < tableSize; i++)
+	{
+		if (table[i].isAvailable())
+			cout<<table[i];
+	}
+	return;
+}
+
 void gamesMenu(DynamicArray<Game> &games)
 {
 	char choice;
@@ -122,6 +151,7 @@ void gamesMenu(DynamicArray<Game> &games)
 		cout<<" [2] Add games"<<endl;
 		cout<<" [3] Update game"<<endl;
 		cout<<" [4] Remove game"<<endl;
+		cout<<" [5] Search available game"<<endl;
 		cout<<" [Q] Main Menu"<<endl;
 		cin>>choice;
 		choice = tolower(choice);
@@ -137,7 +167,7 @@ void gamesMenu(DynamicArray<Game> &games)
 		}
 		else if (choice == '3')
 		{
-			string id;
+			int id;
 			cout<<"======< Game Update >======"<<endl;
 			cout<<"Enter game id: ";
 			cin>>id;
@@ -148,11 +178,39 @@ void gamesMenu(DynamicArray<Game> &games)
 		}
 		else if (choice == '4')
 		{
-			string id;
+			int id;
 			cout<<"======< Game Remove >======"<<endl;
 			cout<<"Enter game id: ";
 			cin>>id;
 			games.remove(id);
+		}
+		else if (choice == '5')
+		{
+			int id = 0;
+			string text;
+			cout<<"======< Games Availability Search >======"<<endl;
+			bool goString = getInput("Search for title ?<y/n>");
+			if (goString)
+			{
+				string term;
+				cout<<"Enter game title: ";
+				cin>>term;
+			}
+			else
+			{
+				int term;
+				cout<<"Enter game id: ";
+				cin>>term;
+			}
+			cout<<"======< Search Result >======"<<endl;
+			if (goString)
+			{
+				showAvailable(text, games, Game());
+			}
+			else
+			{
+				showAvailable(id, games, Game());
+			}
 		}
 		else if (choice == 'q')
 			break;
@@ -169,6 +227,7 @@ void moviesMenu(DynamicArray<Movie> &movies)
 		cout<<" [2] Add movies"<<endl;
 		cout<<" [3] Update movie"<<endl;
 		cout<<" [4] Remove movie"<<endl;
+		cout<<" [5] Search available movie"<<endl;
 		cout<<" [Q] Main Menu"<<endl;
 		cin>>choice;
 		choice = tolower(choice);
@@ -184,7 +243,7 @@ void moviesMenu(DynamicArray<Movie> &movies)
 		}
 		else if (choice == '3')
 		{
-			string id;
+			int id;
 			cout<<"======< Movie Update >======"<<endl;
 			cout<<"Enter movie id: ";
 			cin>>id;
@@ -195,11 +254,39 @@ void moviesMenu(DynamicArray<Movie> &movies)
 		}
 		else if (choice == '4')
 		{
-			string id;
+			int id;
 			cout<<"======< Movie Remove >======"<<endl;
 			cout<<"Enter movie id: ";
 			cin>>id;
 			movies.remove(id);
+		}
+		else if (choice == '5')
+		{
+			int id = 0;
+			string text;
+			cout<<"======< Movies Availability Search >======"<<endl;
+			bool goString = getInput("Search for title ?<y/n>");
+			if (goString)
+			{
+				string term;
+				cout<<"Enter movie title: ";
+				cin>>term;
+			}
+			else
+			{
+				int term;
+				cout<<"Enter movie id: ";
+				cin>>term;
+			}
+			cout<<"======< Search Result >======"<<endl;
+			if (goString)
+			{
+				showAvailable(text, movies, Movie());
+			}
+			else
+			{
+				showAvailable(id, movies, Movie());
+			}
 		}
 		else if (choice == 'q')
 			break;
@@ -216,6 +303,7 @@ void dramaMenu(DynamicArray<Drama> &drama)
 		cout<<" [2] Add drama"<<endl;
 		cout<<" [3] Update dramae"<<endl;
 		cout<<" [4] Remove drama"<<endl;
+		cout<<" [5] Search available drama"<<endl;
 		cout<<" [Q] Main Menu"<<endl;
 		cin>>choice;
 		choice = tolower(choice);
@@ -231,7 +319,7 @@ void dramaMenu(DynamicArray<Drama> &drama)
 		}
 		else if (choice == '3')
 		{
-			string id;
+			int id;
 			cout<<"======< Drama Update >======"<<endl;
 			cout<<"Enter drama id: ";
 			cin>>id;
@@ -242,11 +330,39 @@ void dramaMenu(DynamicArray<Drama> &drama)
 		}
 		else if (choice == '4')
 		{
-			string id;
+			int id;
 			cout<<"======< Drama Remove >======"<<endl;
 			cout<<"Enter drama id: ";
 			cin>>id;
 			drama.remove(id);
+		}
+		else if (choice == '5')
+		{
+			int id = 0;
+			string text;
+			cout<<"======< Drama Availability Search >======"<<endl;
+			bool goString = getInput("Search for title ?<y/n>");
+			if (goString)
+			{
+				string term;
+				cout<<"Enter drama title: ";
+				cin>>term;
+			}
+			else
+			{
+				int term;
+				cout<<"Enter drama id: ";
+				cin>>term;
+			}
+			cout<<"======< Search Result >======"<<endl;
+			if (goString)
+			{
+				showAvailable(text, drama, Drama());
+			}
+			else
+			{
+				showAvailable(id, drama, Drama());
+			}
 		}
 		else if (choice == 'q')
 			break;

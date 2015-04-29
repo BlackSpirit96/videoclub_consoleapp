@@ -23,6 +23,8 @@ public:
 	void print();
 	void printSearch(int id);
 	void printSearch(std::string id);
+	void returnSearch(int id, T *&table,int &tableSize);
+	void returnSearch(std::string id, T *&table,int &tableSize);
 };
 
 template <class T>
@@ -151,6 +153,52 @@ void DynamicArray<T>::printSearch(string id)
 		if (data[i] == id)
 			std::cout<<data[i]<<" "<<std::endl;
 	}
+}
+
+template <class T>
+void DynamicArray<T>::returnSearch(int id, T *&table, int &tableSize)
+{
+	int pos = 0;
+	tableSize = 0;
+	for (int i = 0; i < length; i++)
+	{
+		if (data[i] == id)
+			tableSize++;
+	}
+
+	table = new T[tableSize];
+	for (int i = 0; i < length; i++)
+	{
+		if (data[i] == id)
+		{
+			table[pos] = data[i];
+			pos++;
+		}
+	}
+	return;
+}
+
+template <class T>
+void DynamicArray<T>::returnSearch(std::string id, T *&table, int &tableSize)
+{
+	int pos = 0;
+	tableSize = 0;
+	for (int i = 0; i < length; i++)
+	{
+		if (data[i] == id)
+			tableSize++;
+	}
+
+	table = new T[tableSize];
+	for (int i = 0; i < length; i++)
+	{
+		if (data[i] == id)
+		{
+			table[pos] = data[i];
+			pos++;
+		}
+	}
+	return;
 }
 
 template <class T>
