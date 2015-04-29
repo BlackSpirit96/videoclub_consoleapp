@@ -4,8 +4,9 @@
 #include <iostream>
 #include <string>
 
-struct Date
+class Date
 {
+public:
 	int day;
 	int month;
 	int year;
@@ -14,17 +15,23 @@ struct Date
 class Rent
 {
 public:
-	Rent(std::string customerID, std::string itemSerial, Date date);
+	Rent(std::string customerID, std::string itemSerial, Date date, bool vip, std::string type);
     std::string getCustomerID();
     Date getDate();
-    string getItemSerial();
-    void setCustomerID(string customerID);
+    std::string getItemSerial();
+    void setCustomerID(std::string customerID);
     void setDate(Date date);
-    void setItemSerial(string itemSerial);
+    void setItemSerial(std::string itemSerial);
+    std::string getType();
+    bool getVip();
+    void setType(std::string type);
+    void setVip(bool vip);
 private:
 	std::string customerID;
 	std::string itemSerial;
 	Date date;
+	bool vip;
+	char type;
 };
 
 #endif /* RENT_H_ */
