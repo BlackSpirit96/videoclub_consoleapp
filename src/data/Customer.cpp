@@ -126,6 +126,6 @@ ostream& Customer::print(ostream& mystream)
 
 ostream &operator<<(ostream &mystream, Customer &client)
 {
-	return client.print(mystream)<<endl;
+	return client.print(mystream);
 }
 

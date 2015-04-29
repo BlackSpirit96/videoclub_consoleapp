@@ -21,7 +21,8 @@ public:
 	T* search(int id);
 	T* search(std::string title);
 	void print();
-	void printSearch(std::string id); // todo void printSearch(std::string id)
+	void printSearch(int id);
+	void printSearch(std::string id);
 };
 
 template <class T>
@@ -129,6 +130,26 @@ void DynamicArray<T>::print()
 	for (int i = 0; i < length; i++)
 	{
 		std::cout<<data[i]<<" "<<std::endl;
+	}
+}
+
+template <class T>
+void DynamicArray<T>::printSearch(int id)
+{
+	for (int i = 0; i < length; i++)
+	{
+		if (data[i] == id)
+			std::cout<<data[i]<<" "<<std::endl;
+	}
+}
+
+template <class T>
+void DynamicArray<T>::printSearch(string id)
+{
+	for (int i = 0; i < length; i++)
+	{
+		if (data[i] == id)
+			std::cout<<data[i]<<" "<<std::endl;
 	}
 }
 

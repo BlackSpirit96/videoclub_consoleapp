@@ -14,6 +14,7 @@
 
 using namespace std;
 
+Date TODAY_DAY;
 
 void loadData(DynamicArray<Customer> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
@@ -365,7 +366,7 @@ void customerMenu(DynamicArray<Customer> &customers)
 	}
 }
 
-void rentMenu(DynamicArray<Customer> &customers, DynamicArray<Rent> &rents)
+void rentMenu(DynamicArray<Customer> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
 	char choice;
 	while(true)
@@ -388,7 +389,7 @@ void rentMenu(DynamicArray<Customer> &customers, DynamicArray<Rent> &rents)
 			cin>>itemSerial;
 			cout<<"Enter day: ";
 			cin>>date.day>>date.month>>date.year;
-			rents.insert(Rent(customerID, itemSerial, date, customers.search(customerID)->isVIP(), "game"));
+			rents.insert(Rent(customerID, itemSerial, date, customers.search(customerID)->isVIP(), false, "game"));
 		}
 		else if (choice == '2')
 		{
@@ -400,7 +401,7 @@ void rentMenu(DynamicArray<Customer> &customers, DynamicArray<Rent> &rents)
 			cin>>itemSerial;
 			cout<<"Enter day: ";
 			cin>>date.day>>date.month>>date.year;
-			rents.insert(Rent(customerID, itemSerial, date, customers.search(customerID)->isVIP(), "movie"));
+			rents.insert(Rent(customerID, itemSerial, date, customers.search(customerID)->isVIP(), movies.search(itemSerial)->isDvd(), "movie"));
 		}
 		else if (choice == '3')
 		{
@@ -412,14 +413,14 @@ void rentMenu(DynamicArray<Customer> &customers, DynamicArray<Rent> &rents)
 			cin>>itemSerial;
 			cout<<"Enter day: ";
 			cin>>date.day>>date.month>>date.year;
-			rents.insert(Rent(customerID, itemSerial, date, customers.search(customerID)->isVIP(), "drama"));
+			rents.insert(Rent(customerID, itemSerial, date, customers.search(customerID)->isVIP(), drama.search(itemSerial)->isDvd(), "drama"));
 		}
 		else if (choice == '4')
 		{
 			string itemSerial;
 			cout<<"Enter item serial number: ";
 			cin>>itemSerial;
-			cout<<"Checkout: "<<rents.search(itemSerial)->checkout()<<endl;
+			cout<<"Checkout: "<<rents.search(itemSerial)->checkout(TODAY_DAY)<<endl;
 			rents.remove(itemSerial);
 		}
 		else if (choice == 'q')
@@ -446,7 +447,7 @@ void mainMenu(DynamicArray<Customer> &customers, DynamicArray<Game> &games, Dyna
 		else if (choice == '2')
 			customerMenu(customers);
 		else if (choice == '3')
-			rentMenu(customers, rents);
+			rentMenu(customers, games, movies, drama, rents);
 		else if (choice == 'q')
 			break;
 	}
@@ -458,6 +459,8 @@ void saveData(DynamicArray<Customer> &customers, DynamicArray<Game> &games, Dyna
 }
 
 int main() {
+	cout<<"Enter today date: ";
+	cin>>TODAY_DAY;
 	DynamicArray<Customer> customers(100);
 	DynamicArray<Game> games(100);
 	DynamicArray<Movie> movies(100);

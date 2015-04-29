@@ -75,7 +75,7 @@ ostream& BaseItem::print(ostream& mystream)
 
 ostream &operator<<(ostream &mystream, BaseItem &item)
 {
-	return item.print(mystream)<<endl;
+	return item.print(mystream);
 }
 
 bool BaseItem::operator==(int number)

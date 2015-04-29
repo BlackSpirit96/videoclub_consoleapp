@@ -9,12 +9,13 @@ Rent::Rent()
 	setType("game");
 }
 
-Rent::Rent(std::string customerID, std::string itemSerial, Date date, bool vip, std::string type)
+Rent::Rent(std::string customerID, std::string itemSerial, Date date, bool vip, bool dvd, std::string type)
 {
 	this->customerID = customerID;
 	this->itemSerial = itemSerial;
 	this->date = date;
 	this->vip = vip;
+	this->dvd = dvd;
 	setType(type);
 }
 
@@ -89,6 +90,65 @@ bool Rent::operator==(std::string itemText)
 	return itemSerial == itemText;
 }
 
+float Rent::checkout(Date today)
+{
+	float cost = 0;
+	int daydiff = today - date;
+	if (type == 'g')
+	{
+		if ( daydiff <= 2)
+		{
+			cost = 3.0;
+		}
+		else
+		{
+			cost = 3 + (daydiff - 2);
+		}
+	}
+	else if (type == 'd')
+	{
+		if (daydiff <= 3)
+		{
+			cost = 2.0;
+		}
+		else
+		{
+			cost = 2.0 + (daydiff - 3) * 0.5;
+		}
+		if (!dvd)
+		{
+			cost += 1;
+		}
+	}
+	else if (type == 'm')
+	{
+		if (!dvd)
+		{
+			cost = daydiff * 2.0;
+		}
+		else
+		{
+			if (daydiff <= 3 )
+			{
+				cost = 1.0;
+			}
+			else
+			{
+				cost = 1.0 + (daydiff - 3) * 0.5;
+			}
+		}
+		if (today.year == date.year)
+		{
+			cost += cost * 0.5;
+		}
+	}
+	if (vip)
+	{
+		cost -= cost * 0.05;
+	}
+	return cost;
+}
+
 std::ostream& Rent::print(std::ostream& mystream)
 {
 	return mystream<<customerID<<" "<<itemSerial<<" "<<date<<" "<<vip<<" "<<getType();
@@ -96,5 +156,5 @@ std::ostream& Rent::print(std::ostream& mystream)
 
 std::ostream &operator<<(std::ostream &mystream, Rent &rent)
 {
-	return rent.print(mystream)<<std::endl;
+	return rent.print(mystream);
 }
