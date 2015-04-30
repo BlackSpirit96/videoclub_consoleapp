@@ -24,12 +24,15 @@ public:
     friend ostream &operator<<(ostream &mystream, BaseItem &item);
     bool operator==(int number);
     bool operator==(string text);
+    bool isAvailable();
+    void setAvailability(bool available);
 private:
     int id;
 	string serial;
 	string title;
 	string genre;
 	int year;
+	bool availability;
 };
 
 #endif /* BASEITEM_H_ */

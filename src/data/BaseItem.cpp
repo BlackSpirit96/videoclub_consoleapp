@@ -7,6 +7,7 @@ BaseItem::BaseItem(int id, string serial, string title, string genre, int year)
 	this->title = title;
 	this->genre = genre;
 	this->year = year;
+	this->availability = true;
 }
 
 BaseItem::BaseItem()
@@ -16,6 +17,7 @@ BaseItem::BaseItem()
 	this->title = "";
 	this->genre = "";
 	this->year = 0;
+	this->availability = false;
 }
 
 string BaseItem::getGenre()
@@ -86,4 +88,14 @@ bool BaseItem::operator==(int number)
 bool BaseItem::operator==(string text)
 {
 	return title == text;
+}
+
+bool BaseItem::isAvailable()
+{
+	return availability;
+}
+
+void BaseItem::setAvailability(bool available)
+{
+	this->availability = available;
 }
