@@ -51,13 +51,15 @@ public:
     bool operator==(int itemNum);
     virtual std::ostream& print(std::ostream& mystream);
     friend std::ostream &operator<<(std::ostream &mystream, Rent &rent);
+    virtual std::istream& readData(std::istream &mystream);
+    friend std::istream &operator>>(std::istream &mystream, Rent &item);
 private:
 	std::string customerID;
 	int itemID;
 	Date date;
 	bool vip;
 	bool dvd;
-	char type;
+	std::string type;
 };
 
 #endif /* RENT_H_ */

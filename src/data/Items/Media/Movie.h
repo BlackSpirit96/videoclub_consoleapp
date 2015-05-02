@@ -28,6 +28,7 @@ public:
 	void setDuration(struct time duration);
 	struct time getDuration();
 	virtual ostream& print(ostream& mystream);
+	virtual istream& readData(istream &mystream);
 private:
 	struct time duration;
 };

@@ -16,6 +16,7 @@ public:
     void setDirector(string director);
     void setDvd(bool dvd);
     virtual ostream& print(ostream& mystream);
+    virtual istream& readData(istream &mystream);
 private:
 	string director;
 	string actors;

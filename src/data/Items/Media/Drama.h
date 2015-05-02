@@ -29,6 +29,7 @@ public:
     void setEpisodes(struct range episodes);
     void setSeason(int season);
     virtual ostream& print(ostream& mystream);
+    virtual istream& readData(istream &mystream);
 private:
 	int season;
 	struct range episodes;

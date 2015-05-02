@@ -30,3 +30,8 @@ ostream& Movie::print(ostream& mystream)
 	mystream<<" "<<duration;
 	return mystream;
 }
+
+istream& Movie::readData(istream &mystream)
+{
+	return Media::readData(mystream)>>duration;
+}

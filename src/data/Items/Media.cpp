@@ -52,3 +52,8 @@ ostream& Media::print(ostream& mystream)
 	mystream<<" "<<director<<" "<<actors<<" "<<dvd;
 	return mystream;
 }
+
+istream& Media::readData(istream &mystream)
+{
+	return BaseItem::readData(mystream)>>director>>actors>>dvd;
+}

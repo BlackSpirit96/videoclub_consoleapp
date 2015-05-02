@@ -42,3 +42,7 @@ ostream& Drama::print(ostream& mystream)
 	return mystream;
 }
 
+istream& Drama::readData(istream &mystream)
+{
+	return Media::readData(mystream)>>season>>episodes;
+}

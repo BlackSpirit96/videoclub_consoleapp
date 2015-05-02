@@ -22,6 +22,8 @@ public:
     void setYear(int year);
     virtual ostream& print(ostream& mystream);
     friend ostream &operator<<(ostream &mystream, BaseItem &item);
+    virtual istream& readData(istream &mystream);
+    friend istream &operator>>(istream &mystream, BaseItem &item);
     bool operator==(int number);
     bool operator==(string text);
     bool isAvailable();
