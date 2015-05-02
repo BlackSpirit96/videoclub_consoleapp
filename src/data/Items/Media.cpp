@@ -8,8 +8,8 @@ Media::Media()
 	this->dvd = false;
 }
 
-Media::Media(int id, string serial, string title, string genre, int year, string director, string actors, bool dvd)
-: BaseItem(id, serial, title, genre, year)
+Media::Media(int id, string serial, string title, string genre, int year, bool availability, string director, string actors, bool dvd)
+: BaseItem(id, serial, title, genre, year, availability)
 {
 	this->director = director;
 	this->actors = actors;

@@ -24,7 +24,7 @@ class Movie: public Media
 {
 public:
 	Movie();
-	Movie(int id, string serial, string title, string genre, int year, string director, string actors, bool dvd, struct time duration);
+	Movie(int id, string serial, string title, string genre, int year, bool availability, string director, string actors, bool dvd, struct time duration);
 	void setDuration(struct time duration);
 	struct time getDuration();
 	virtual ostream& print(ostream& mystream);

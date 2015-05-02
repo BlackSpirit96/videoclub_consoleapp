@@ -52,6 +52,6 @@ void VIP::setIssuingNetwork(string issuingNetwork)
 ostream& VIP::print(ostream& mystream)
 {
 	Customer::print(mystream);
-	mystream<<" "<<credidCardNumber<<" "<<issuingNetwork<<" "<<isVIP();
+	mystream<<" "<<credidCardNumber<<" "<<issuingNetwork<<" "<<cvv;
 	return mystream;
 }

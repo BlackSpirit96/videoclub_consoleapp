@@ -8,7 +8,7 @@ using namespace std;
 class BaseItem
 {
 public:
-	BaseItem(int id, string serial, string title, string genre, int year);
+	BaseItem(int id, string serial, string title, string genre, int year, bool availability);
 	BaseItem();
     string getGenre();
     int getId();

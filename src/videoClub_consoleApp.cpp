@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <sstream>
 
 //dataClasses
 #include "data/Rent.h"
@@ -18,7 +20,157 @@ Date TODAY_DAY;
 
 void loadData(DynamicArray<Customer> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
-	// todo other:load data
+	ifstream customersFile("customers.txt");
+	ifstream customersVIPFile("customersvip.txt");
+	ifstream gamesFile("games.txt");
+	ifstream moviesFile("movies.txt");
+	ifstream dramaFile("drama.txt");
+	ifstream rentsFile("rents.txt");
+	string temp;
+
+	while (getline(customersFile, temp))
+	{
+		int customerType;
+		string id, firstName, lastName, dateOfBirth, gender, address, phoneNumber;
+		string creditCardNumber, issuingNetwork;
+		int cvv;
+		istringstream line_stream(temp);
+		line_stream>>customerType;
+		line_stream>>id;
+		line_stream>>firstName;
+		line_stream>>lastName;
+		line_stream>>dateOfBirth;
+		line_stream>>gender;
+		line_stream>>address;
+		line_stream>>phoneNumber;
+		if (customerType == 0)
+		{
+			customers.insert(Customer(id, firstName, lastName, dateOfBirth, gender, address, phoneNumber));
+		}
+		else
+		{
+			line_stream>>creditCardNumber;
+			line_stream>>issuingNetwork;
+			line_stream>>cvv;
+			customers.insert(VIP(id, firstName, lastName, dateOfBirth, gender, address, phoneNumber, creditCardNumber, issuingNetwork, cvv));
+		}
+	}
+
+	while (getline(gamesFile, temp))
+	{
+		int id, year;
+		string serial, title, genre, console;
+		bool availability;
+		istringstream line_stream(temp);
+		line_stream>>id;
+		line_stream>>title;
+		line_stream>>serial;
+		line_stream>>genre;
+		line_stream>>year;
+		line_stream>>availability;
+		line_stream>>console;
+		Game newGame(id, serial, title, genre, year, availability, console);
+		games.insert(newGame);
+	}
+
+	while(getline(moviesFile, temp))
+	{
+		int id, year;
+		string serial, title, genre, director, actors;
+		bool dvd, availability;
+		struct time duration;
+		istringstream line_stream(temp);
+		line_stream>>id;
+		line_stream>>title;
+		line_stream>>serial;
+		line_stream>>genre;
+		line_stream>>year;
+		line_stream>>availability;
+		line_stream>>director;
+		line_stream>>actors;
+		line_stream>>dvd;
+		line_stream>>duration;
+		movies.insert(Movie(id,serial, title, genre, year, availability, director, actors, dvd, duration));
+	}
+
+	while(getline(dramaFile, temp))
+	{
+		int id, year, season;
+		string serial, title, genre, director, actors;
+		struct range episodes;
+		bool dvd, availability;
+		istringstream line_stream(temp);
+		line_stream>>id;
+		line_stream>>title;
+		line_stream>>serial;
+		line_stream>>genre;
+		line_stream>>year;
+		line_stream>>availability;
+		line_stream>>director;
+		line_stream>>actors;
+		line_stream>>dvd;
+		line_stream>>season;
+		line_stream>>episodes;
+		drama.insert(Drama(id, serial, title, genre, year, availability, director, actors, dvd, season, episodes));
+	}
+
+	while(getline(rentsFile, temp))
+	{
+		string customerID, itemSerial;
+		struct Date date;
+		bool vip, dvd;
+		string type;
+		istringstream line_stream(temp);
+		line_stream>>customerID;
+		line_stream>>itemSerial;
+		line_stream>>date;
+		line_stream>>vip;
+		line_stream>>dvd;
+		line_stream>>type;
+		rents.insert(Rent(customerID, itemSerial, date, vip, dvd, type));
+	}
+}
+
+template <class T>
+void getInput(string message, T &thing)
+{
+	cout<<message;
+    if ( !(cin>>thing) )
+    {
+      cin.clear();
+      cin.ignore();
+      cout << "Incorrect entry. Try again: ";
+    }
+}
+
+void convertSpaces(string &text)
+{
+	for (unsigned int i = 0; i < text.length(); i++)
+	{
+		if(text[i] == ' ')
+			text[i] = '_';
+	}
+}
+
+void toLower(string &text)
+{
+	for (unsigned int i = 0; i < text.length(); i++)
+	{
+			text[i] = tolower(text[i]);
+	}
+}
+
+void getLine(string message, string &returnStr)
+{
+	cout<<message;
+	cin.ignore();
+	if (!getline(cin, returnStr))
+	{
+		cin.clear();
+		cin.ignore();
+		cout << "Incorrect entry. Try again: ";
+	}
+	convertSpaces(returnStr);
 }
 
 bool getInput(string message)
@@ -29,7 +181,7 @@ bool getInput(string message)
 	{
 		cin.get(choice);
 		choice = tolower(choice);
-	} while (choice != 'y' || choice != 'n');
+	} while (choice != 'y' && choice != 'n');
 	if (choice == 'y')
 		return true;
 	else
@@ -40,19 +192,13 @@ void insertGame(DynamicArray<Game> &games)
 {
 	int id, year;
 	string serial, title, genre, console;
-	cout<<"Enter game id: ";
-	cin>>id;
-	cout<<"Enter game title: ";
-	getline(cin, title);
-	cout<<"Enter game serial: ";
-	cin>>serial;
-	cout<<"Enter game genre: ";
-	cin>>genre;
-	cout<<"Enter game console type: ";
-	cin>>console;
-	cout<<"Enter game production year: ";
-	cin>>year;
-	Game newGame(id, serial, title, genre, year, console);
+	getInput("Enter game id: ", id);
+	getLine("Enter game title: ", title);
+	getInput("Enter game serial: ", serial);
+	getInput("Enter game genre: ", genre);
+	getInput("Enter game console type: ", console);
+	getInput("Enter game production year: ", year);
+	Game newGame(id, serial, title, genre, year, true, console);
 	games.insert(newGame);
 }
 
@@ -60,34 +206,18 @@ void insertMovie(DynamicArray<Movie> &movies)
 {
 	int id, year;
 	string serial, title, genre, director, actors;
-	char dvdc;
+	bool dvd;
 	struct time duration;
-	cout<<"Enter movie id : ";
-	cin>>id;
-	cout<<"Enter movie serial : ";
-	cin>>serial;
-	cout<<"Enter movie title : ";
-	getline(cin, title);
-	cout<<"Enter movie genre : ";
-	cin>>genre;
-	cout<<"Enter movie year : ";
-	cin>>year;
-	cout<<"Enter movie director : ";
-	getline(cin, director);
-	cout<<"Enter movie actors : ";
-	getline(cin, actors);
-	cout<<"Is movie in dvd form ?<y/n>";
-	cin>>dvdc;
-	dvdc = tolower(dvdc);
-	while ( dvdc != 'y' || dvdc != 'n')
-	{
-		cout<<"Is movie in dvd form ?<y/n>";
-		cin>>dvdc;
-		dvdc = tolower(dvdc);
-	}
-	cout<<"Enter movie duration (hour min sec) : ";
-	cin>>duration.hours>>duration.minutes>>duration.seconds;
-	movies.insert(Movie(id,serial, title, genre, year, director, actors, dvdc == 'y', duration));
+	getInput("Enter movie id : ", id);
+	getInput("Enter movie serial : ", serial);
+	getLine("Enter movie title : ", title);
+	getInput("Enter movie genre : ", genre);
+	getInput("Enter movie year : ", year);
+	getLine("Enter movie director : ", director);
+	getLine("Enter movie actors : ", actors);
+	dvd = getInput("Is movie in dvd form ?<y/n>");
+	getInput("Enter movie duration (hour min sec) : ", duration);
+	movies.insert(Movie(id,serial, title, genre, year, true, director, actors, dvd, duration));
 	return;
 }
 
@@ -96,35 +226,18 @@ void insertDrama(DynamicArray<Drama> &drama)
 	int id, year, season;
 	string serial, title, genre, director, actors;
 	struct range episodes;
-	char dvdc;
-	cout<<"Enter drama id : ";
-	cin>>id;
-	cout<<"Enter drama serial : ";
-	cin>>serial;
-	cout<<"Enter drama title : ";
-	getline(cin, title);
-	cout<<"Enter drama genre : ";
-	cin>>genre;
-	cout<<"Enter drama year : ";
-	cin>>year;
-	cout<<"Enter drama director : ";
-	getline(cin, director);
-	cout<<"Enter drama actors : ";
-	getline(cin, actors);
-	cout<<"Is drama in dvd form ?<y/n>";
-	cin>>dvdc;
-	dvdc = tolower(dvdc);
-	while ( dvdc != 'y' || dvdc != 'n')
-	{
-		cout<<"Is drama in dvd form ?<y/n>";
-		cin>>dvdc;
-		dvdc = tolower(dvdc);
-	}
-	cout<<"Enter drama season: ";
-	cin>>season;
-	cout<<"Enter drama episode rage(start stop): ";
-	cin>>episodes.start>>episodes.end;
-	drama.insert(Drama(id, serial, title, genre, year, director, actors, dvdc == 'y', season, episodes));
+	bool dvd;
+	getInput("Enter drama id : ", id);
+	getInput("Enter drama serial : ", serial);
+	getLine("Enter drama title : ", title);
+	getInput("Enter drama genre : ", genre);
+	getInput("Enter drama year : ", year);
+	getLine("Enter drama director : ", director);
+	getLine("Enter drama actors : ", actors);
+	dvd = getInput("Is drama in dvd form ?<y/n>");
+	getInput("Enter drama season: ", season);
+	getInput("Enter drama episode rage(start stop): ", episodes);
+	drama.insert(Drama(id, serial, title, genre, year, true, director, actors, dvd, season, episodes));
 }
 
 template <typename A, class B, class C>
@@ -153,7 +266,7 @@ void gamesMenu(DynamicArray<Game> &games)
 		cout<<" [4] Remove game"<<endl;
 		cout<<" [5] Search available game"<<endl;
 		cout<<" [Q] Main Menu"<<endl;
-		cin>>choice;
+		getInput("", choice);
 		choice = tolower(choice);
 		if (choice == '1')
 		{
@@ -169,8 +282,7 @@ void gamesMenu(DynamicArray<Game> &games)
 		{
 			int id;
 			cout<<"======< Game Update >======"<<endl;
-			cout<<"Enter game id: ";
-			cin>>id;
+			getInput("Enter game id: ", id);
 			games.printSearch(id);
 			games.remove(id);
 			cout<<"Enter new game data."<<endl;
@@ -180,8 +292,7 @@ void gamesMenu(DynamicArray<Game> &games)
 		{
 			int id;
 			cout<<"======< Game Remove >======"<<endl;
-			cout<<"Enter game id: ";
-			cin>>id;
+			getInput("Enter game id: ", id);
 			games.remove(id);
 		}
 		else if (choice == '5')
@@ -193,14 +304,12 @@ void gamesMenu(DynamicArray<Game> &games)
 			if (goString)
 			{
 				string term;
-				cout<<"Enter game title: ";
-				cin>>term;
+				getInput("Enter game title: ", term);
 			}
 			else
 			{
 				int term;
-				cout<<"Enter game id: ";
-				cin>>term;
+				getInput("Enter game id: ", term);
 			}
 			cout<<"======< Search Result >======"<<endl;
 			if (goString)
@@ -229,7 +338,7 @@ void moviesMenu(DynamicArray<Movie> &movies)
 		cout<<" [4] Remove movie"<<endl;
 		cout<<" [5] Search available movie"<<endl;
 		cout<<" [Q] Main Menu"<<endl;
-		cin>>choice;
+		getInput("", choice);
 		choice = tolower(choice);
 		if (choice == '1')
 		{
@@ -245,8 +354,7 @@ void moviesMenu(DynamicArray<Movie> &movies)
 		{
 			int id;
 			cout<<"======< Movie Update >======"<<endl;
-			cout<<"Enter movie id: ";
-			cin>>id;
+			getInput("Enter movie id: ", id);
 			movies.printSearch(id);
 			movies.remove(id);
 			cout<<"Enter new movie data."<<endl;
@@ -256,8 +364,7 @@ void moviesMenu(DynamicArray<Movie> &movies)
 		{
 			int id;
 			cout<<"======< Movie Remove >======"<<endl;
-			cout<<"Enter movie id: ";
-			cin>>id;
+			getInput("Enter movie id: ", id);
 			movies.remove(id);
 		}
 		else if (choice == '5')
@@ -269,14 +376,12 @@ void moviesMenu(DynamicArray<Movie> &movies)
 			if (goString)
 			{
 				string term;
-				cout<<"Enter movie title: ";
-				cin>>term;
+				getInput("Enter movie title: ", term);
 			}
 			else
 			{
 				int term;
-				cout<<"Enter movie id: ";
-				cin>>term;
+				getInput("Enter movie id: ", term);
 			}
 			cout<<"======< Search Result >======"<<endl;
 			if (goString)
@@ -301,11 +406,11 @@ void dramaMenu(DynamicArray<Drama> &drama)
 		cout<<"======< Drama Menu >======"<<endl;
 		cout<<" [1] Show drama"<<endl;
 		cout<<" [2] Add drama"<<endl;
-		cout<<" [3] Update dramae"<<endl;
+		cout<<" [3] Update drama"<<endl;
 		cout<<" [4] Remove drama"<<endl;
 		cout<<" [5] Search available drama"<<endl;
 		cout<<" [Q] Main Menu"<<endl;
-		cin>>choice;
+		getInput("", choice);
 		choice = tolower(choice);
 		if (choice == '1')
 		{
@@ -314,15 +419,14 @@ void dramaMenu(DynamicArray<Drama> &drama)
 		}
 		else if (choice == '2')
 		{
-			cout<<"======< New movie >======"<<endl;
+			cout<<"======< New drama >======"<<endl;
 			insertDrama(drama);
 		}
 		else if (choice == '3')
 		{
 			int id;
 			cout<<"======< Drama Update >======"<<endl;
-			cout<<"Enter drama id: ";
-			cin>>id;
+			getInput("Enter drama id: ", id);
 			drama.printSearch(id);
 			drama.remove(id);
 			cout<<"Enter new drama data."<<endl;
@@ -332,8 +436,7 @@ void dramaMenu(DynamicArray<Drama> &drama)
 		{
 			int id;
 			cout<<"======< Drama Remove >======"<<endl;
-			cout<<"Enter drama id: ";
-			cin>>id;
+			getInput("Enter drama id: ", id);
 			drama.remove(id);
 		}
 		else if (choice == '5')
@@ -345,14 +448,12 @@ void dramaMenu(DynamicArray<Drama> &drama)
 			if (goString)
 			{
 				string term;
-				cout<<"Enter drama title: ";
-				cin>>term;
+				getInput("Enter drama title: ", term);
 			}
 			else
 			{
 				int term;
-				cout<<"Enter drama id: ";
-				cin>>term;
+				getInput("Enter drama id: ", term);
 			}
 			cout<<"======< Search Result >======"<<endl;
 			if (goString)
@@ -379,7 +480,7 @@ void itemMenu(DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArr
 		cout<<" [2] Movie management"<<endl;
 		cout<<" [3] Series management"<<endl;
 		cout<<" [Q] Main Menu"<<endl;
-		cin>>choice;
+		getInput("", choice);
 		choice = tolower(choice);
 		if (choice == '1')
 			gamesMenu(games);
@@ -397,36 +498,21 @@ void insertCustomer(DynamicArray<Customer> &customers)
 	string id, firstName, lastName, dateOfBirth, gender, address, phoneNumber;
 	string creditCardNumber, issuingNetwork;
 	int cvv;
-	char vip;
-	cout<<"Enter id number: ";
-	cin>>id;
-	cout<<"Enter fistname: ";
-	cin>>firstName;
-	cout<<"Enter lastname: ";
-	cin>>lastName;
-	cout<<"Enter date of birth: ";
-	getline(cin, dateOfBirth);
-	cout<<"Enter gender: ";
-	cin>>gender;
-	// todo 999 : gender = tolower(gender);
-	cout<<"Enter address: ";
-	getline(cin, address);
-	cout<<"Enter phone number: ";
-	cin>>phoneNumber;
-	while(vip != 'y' || vip != 'n')
+	bool vip;
+	getInput("Enter id number: ", id);
+	getInput("Enter fistname: ", firstName);
+	getInput("Enter lastname: ", lastName);
+	getInput("Enter date of birth: ", dateOfBirth); // getline
+	getInput("Enter gender: ", gender);
+	toLower(gender);
+	getInput("Enter address: ", address);
+	getInput("Enter phone number: ", phoneNumber);
+	vip = getInput("Is the customer a VIP one ?<y/n>");
+	if(vip)
 	{
-		cout<<"Is the customer a VIP one ?<y/n>";
-		cin>>vip;
-		vip = tolower(vip);
-	}
-	if(vip == 'y')
-	{
-		cout<<"Enter cradit card number: ";
-		cin>>creditCardNumber;
-		cout<<"Enter credit card issuing network: ";
-		cin>>issuingNetwork;
-		cout<<"Enter cradit card cvv number: ";
-		cin>>cvv;
+		getInput("Enter cradit card number: ", creditCardNumber);
+		getInput("Enter credit card issuing network: ", issuingNetwork);
+		getInput("Enter cradit card cvv number: ", cvv);
 		customers.insert(VIP(id, firstName, lastName, dateOfBirth, gender, address, phoneNumber, creditCardNumber, issuingNetwork, cvv));
 	}
 	else
@@ -446,7 +532,7 @@ void customerMenu(DynamicArray<Customer> &customers)
 		cout<<" [3] Update customer"<<endl;
 		cout<<" [4] Remove customer"<<endl;
 		cout<<" [Q] Main Menu"<<endl;
-		cin>>choice;
+		getInput("", choice);
 		choice = tolower(choice);
 		if (choice == '1')
 		{
@@ -462,8 +548,7 @@ void customerMenu(DynamicArray<Customer> &customers)
 		{
 			string id;
 			cout<<"======< Customer Update >======"<<endl;
-			cout<<"Enter customer id: ";
-			cin>>id;
+			getInput("Enter customer id: ", id);
 			customers.printSearch(id);
 			customers.remove(id);
 			cout<<"Enter new customer data."<<endl;
@@ -473,8 +558,7 @@ void customerMenu(DynamicArray<Customer> &customers)
 		{
 			string id;
 			cout<<"======< Customer Remove >======"<<endl;
-			cout<<"Enter customer id: ";
-			cin>>id;
+			getInput("Enter customer id: ", id);
 			customers.remove(id);
 		}
 		else if (choice == 'q')
@@ -494,40 +578,33 @@ void rentMenu(DynamicArray<Customer> &customers, DynamicArray<Game> &games, Dyna
 		cout<<" [3] Rent a drama"<<endl;
 		cout<<" [4] Checkout rent"<<endl;
 		cout<<" [Q] Main Menu"<<endl;
-		cin>>choice;
+		getInput("", choice);
 		choice = tolower(choice);
 		if (choice == '1')
 		{
-			cout<<"Enter customer id: ";
-			cin>>customerID;
-			cout<<"Enter item serial number: ";
-			cin>>itemSerial;
+			getInput("Enter customer id: ", customerID);
+			getInput("Enter item serial number: ", itemSerial);
 			rents.insert(Rent(customerID, itemSerial, TODAY_DAY, customers.search(customerID)->isVIP(), false, "game"));
 			games.search(itemSerial)->setAvailability(false);
 		}
 		else if (choice == '2')
 		{
-			cout<<"Enter customer id: ";
-			cin>>customerID;
-			cout<<"Enter item serial number: ";
-			cin>>itemSerial;
+			getInput("Enter customer id: ", customerID);
+			getInput("Enter item serial number: ", itemSerial);
 			rents.insert(Rent(customerID, itemSerial, TODAY_DAY, customers.search(customerID)->isVIP(), movies.search(itemSerial)->isDvd(), "movie"));
 			movies.search(itemSerial)->setAvailability(false);
 		}
 		else if (choice == '3')
 		{
-			cout<<"Enter customer id: ";
-			cin>>customerID;
-			cout<<"Enter item serial number: ";
-			cin>>itemSerial;
+			getInput("Enter customer id: ", customerID);
+			getInput("Enter item serial number: ", itemSerial);
 			rents.insert(Rent(customerID, itemSerial, TODAY_DAY, customers.search(customerID)->isVIP(), drama.search(itemSerial)->isDvd(), "drama"));
 			drama.search(itemSerial)->setAvailability(false);
 		}
 		else if (choice == '4')
 		{
 			string itemSerial;
-			cout<<"Enter item serial number: ";
-			cin>>itemSerial;
+			getInput("Enter item serial number: ", itemSerial);
 			Rent *current = rents.search(itemSerial);
 			cout<<"Checkout: "<<current->checkout(TODAY_DAY)<<endl;
 			if (current->getType() == "game")
@@ -561,7 +638,7 @@ void mainMenu(DynamicArray<Customer> &customers, DynamicArray<Game> &games, Dyna
 		cout<<" [2] Customer management"<<endl;
 		cout<<" [3] Rent management"<<endl;
 		cout<<" [Q] Save & Quit"<<endl;
-		cin>>choice;
+		getInput("", choice);
 		choice = tolower(choice);
 		if (choice == '1')
 			itemMenu(games, movies, drama);
@@ -576,12 +653,21 @@ void mainMenu(DynamicArray<Customer> &customers, DynamicArray<Game> &games, Dyna
 
 void saveData(DynamicArray<Customer> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
-	// todo other:save data
+	ofstream customersFile("customers.txt");
+	ofstream gamesFile("games.txt");
+	ofstream moviesFile("movies.txt");
+	ofstream dramaFile("drama.txt");
+	ofstream rentsFile("rents.txt");
+	customers.outputData(customersFile);
+	games.outputData(gamesFile);
+	movies.outputData(moviesFile);
+	drama.outputData(dramaFile);
+	rents.outputData(rentsFile);
 }
 
 int main() {
 	cout<<"Enter today date(day month year): ";
-	cin>>TODAY_DAY;
+	getInput("", TODAY_DAY);
 	DynamicArray<Customer> customers(100);
 	DynamicArray<Game> games(100);
 	DynamicArray<Movie> movies(100);

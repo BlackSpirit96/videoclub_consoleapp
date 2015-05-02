@@ -11,7 +11,7 @@ struct range
 
 inline ostream &operator<<(ostream &mystream, struct range &item)
 {
-	return mystream<<item.start<<" - "<<item.end;
+	return mystream<<item.start<<" "<<item.end;
 }
 
 inline istream &operator>>(istream &mystream, struct range &item)
@@ -23,7 +23,7 @@ class Drama: public Media
 {
 public:
 	Drama();
-	Drama(int id, string serial, string title, string genre, int year, string director, string actors, bool dvd, int season, struct range episodes);
+	Drama(int id, string serial, string title, string genre, int year, bool availability, string director, string actors, bool dvd, int season, struct range episodes);
     struct range getEpisodes();
     int getSeason();
     void setEpisodes(struct range episodes);

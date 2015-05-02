@@ -3,15 +3,16 @@
 
 #include <string>
 #include <iostream>
+#include <fstream>
 
 template <class T>
 class DynamicArray
 {
 private:
 	T *data;
-	int length;
-	int size;
-	bool memoryAllocation(int allocSize); // todo memoryAlloc
+	int length; // current length
+	int size; // array size
+	bool memoryAllocation(int allocSize);
 public:
 	DynamicArray(int size);
 	~DynamicArray();
@@ -23,6 +24,7 @@ public:
 	void print();
 	void printSearch(int id);
 	void printSearch(std::string id);
+	void outputData(ofstream &stream);
 	void returnSearch(int id, T *&table,int &tableSize);
 	void returnSearch(std::string id, T *&table,int &tableSize);
 };
@@ -136,6 +138,15 @@ void DynamicArray<T>::print()
 }
 
 template <class T>
+void DynamicArray<T>::outputData(ofstream &stream)
+{
+	for (int i = 0; i < length; i++)
+	{
+		stream<<data[i]<<std::endl;
+	}
+}
+
+template <class T>
 void DynamicArray<T>::printSearch(int id)
 {
 	for (int i = 0; i < length; i++)
@@ -204,6 +215,16 @@ void DynamicArray<T>::returnSearch(std::string id, T *&table, int &tableSize)
 template <class T>
 bool DynamicArray<T>::memoryAllocation(int allocSize)
 {
+	T *temp = new T[size+allocSize];
+	if (temp)
+	{
+		for (int i = 0; i < length; i++)
+		{
+			temp[i] = this->data[i];
+		}
+		this->size += allocSize;
+		return true;
+	}
 	return false;
 }
 #endif /* DYNAMIC_ARRAY_ */

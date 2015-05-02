@@ -1,13 +1,13 @@
 #include "BaseItem.h"
 
-BaseItem::BaseItem(int id, string serial, string title, string genre, int year)
+BaseItem::BaseItem(int id, string serial, string title, string genre, int year, bool availability)
 {
 	this->id = id;
 	this->serial = serial;
 	this->title = title;
 	this->genre = genre;
 	this->year = year;
-	this->availability = true;
+	this->availability = availability;
 }
 
 BaseItem::BaseItem()
@@ -72,7 +72,7 @@ void BaseItem::setYear(int year)
 
 ostream& BaseItem::print(ostream& mystream)
 {
-	return mystream<<id<<" "<<title<<" "<<serial<<" "<<genre<<" "<<year;
+	return mystream<<id<<" "<<title<<" "<<serial<<" "<<genre<<" "<<year<<" "<<availability;
 }
 
 ostream &operator<<(ostream &mystream, BaseItem &item)

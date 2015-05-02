@@ -8,7 +8,7 @@ class Media: public BaseItem
 {
 public:
 	Media();
-	Media(int id, string serial, string title, string genre, int year, string director, string actors, bool dvd);
+	Media(int id, string serial, string title, string genre, int year, bool availability, string director, string actors, bool dvd);
     string getActors();
     string getDirector();
     bool isDvd();

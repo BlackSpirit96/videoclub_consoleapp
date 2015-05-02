@@ -8,7 +8,7 @@ class Game: public BaseItem
 {
 public:
 	Game();
-	Game(int id, string serial, string title, string genre, int year, string console);
+	Game(int id, string serial, string title, string genre, int year, bool availability, string console);
     string getConsole();
     void setConsole(string console);
     ostream& print(ostream& mystream);

@@ -8,8 +8,8 @@ Drama::Drama()
 	this->season = 0;
 }
 
-Drama::Drama(int id, string serial, string title, string genre, int year, string director, string actors, bool dvd, int season, struct range episodes)
-: Media(id, serial, title, genre, year, director, actors, dvd)
+Drama::Drama(int id, string serial, string title, string genre, int year, bool availability, string director, string actors, bool dvd, int season, struct range episodes)
+: Media(id, serial, title, genre, year, availability, director, actors, dvd)
 {
 	this->episodes = episodes;
 	this->season = season;
@@ -38,7 +38,7 @@ void Drama::setSeason(int season)
 ostream& Drama::print(ostream& mystream)
 {
 	Media::print(mystream);
-	mystream<<getSeason()<<" "<<episodes;
+	mystream<<season<<" "<<episodes;
 	return mystream;
 }
 
