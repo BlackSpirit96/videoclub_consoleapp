@@ -523,43 +523,64 @@ void rentMenu(DynamicArray<VIP> &customers, DynamicArray<Game> &games, DynamicAr
 			getInput("Enter rent id: ", rentID);
 			getInput("Enter customer id: ", customerID);
 			getInput("Enter item id: ", itemID);
-			rents.insert(Rent(rentID, customerID, itemID, TODAY_DAY, customers.search(customerID)->isVIP(), false, "game"));
-			games.search(itemID)->setAvailability(false);
+			VIP *tempC = customers.search(customerID);
+			Game *tempG = games.search(itemID);
+			if (tempC && tempG)
+			{
+				rents.insert(Rent(rentID, customerID, itemID, TODAY_DAY, tempC->isVIP(), false, "game"));
+				tempG->setAvailability(false);
+			}
+			else
+				cout<<"Please enter valid ids!";
 		}
 		else if (choice == '2')
 		{
 			getInput("Enter rent id: ", rentID);
 			getInput("Enter customer id: ", customerID);
 			getInput("Enter item id: ", itemID);
-			rents.insert(Rent(rentID, customerID, itemID, TODAY_DAY, customers.search(customerID)->isVIP(), movies.search(itemID)->isDvd(), "movie"));
-			movies.search(itemID)->setAvailability(false);
+			VIP *tempC = customers.search(customerID);
+			Movie *tempM = movies.search(itemID);
+			if (tempC && tempM)
+			{
+				rents.insert(Rent(rentID, customerID, itemID, TODAY_DAY, tempC->isVIP(), tempM->isDvd(), "movie"));
+				tempM->setAvailability(false);
+			}
+			else
+				cout<<"Please enter valid ids!";
 		}
 		else if (choice == '3')
 		{
 			getInput("Enter rent id: ", rentID);
 			getInput("Enter customer id: ", customerID);
 			getInput("Enter item id: ", itemID);
-			rents.insert(Rent(rentID, customerID, itemID, TODAY_DAY, customers.search(customerID)->isVIP(), drama.search(itemID)->isDvd(), "drama"));
-			drama.search(itemID)->setAvailability(false);
+			VIP *tempC = customers.search(customerID);
+			Drama *tempD = drama.search(itemID);
+			if (tempC && tempD)
+			{
+				rents.insert(Rent(rentID, customerID, itemID, TODAY_DAY, tempC->isVIP(), tempD->isDvd(), "drama"));
+				tempD->setAvailability(false);
+			}
+			else
+				cout<<"Please enter valid ids!";
 		}
 		else if (choice == '4')
 		{
 			rents.print();
-			int itemID;
-			getInput("Enter rent id: ", itemID);
-			Rent *current = rents.search(itemID);
+			int rentID;
+			getInput("Enter rent id: ", rentID);
+			Rent *current = rents.search(rentID);
 			cout<<"Checkout: "<<current->checkout(TODAY_DAY)<<endl;
 			if (current->getType() == "game")
 			{
-				games.search(current->getItemID())->setAvailability(true);
+				games.search(current->getItemID())->setAvailability(true); // todo pointer != null
 			}
 			else if (current->getType() == "movie")
 			{
-				movies.search(current->getItemID())->setAvailability(true);
+				movies.search(current->getItemID())->setAvailability(true); // todo pointer != null
 			}
 			else
 			{
-				drama.search(current->getItemID())->setAvailability(true);
+				drama.search(current->getItemID())->setAvailability(true); // todo pointer != null
 			}
 			rents.remove(itemID);
 		}
