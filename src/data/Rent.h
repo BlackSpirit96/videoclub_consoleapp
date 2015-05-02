@@ -36,24 +36,24 @@ class Rent
 {
 public:
 	Rent();
-	Rent(std::string customerID, std::string itemSerial, Date date, bool vip, bool dvd, std::string type);
+	Rent(std::string customerID, int itemID, Date date, bool vip, bool dvd, std::string type);
     std::string getCustomerID();
     Date getDate();
-    std::string getItemSerial();
+    int getItemID();
     void setCustomerID(std::string customerID);
     void setDate(Date date);
-    void setItemSerial(std::string itemSerial);
+    void setItemID(int itemID);
     std::string getType();
     bool getVip();
     void setType(std::string type);
     void setVip(bool vip);
     float checkout(Date today);
-    bool operator==(std::string itemText);
+    bool operator==(int itemNum);
     virtual std::ostream& print(std::ostream& mystream);
     friend std::ostream &operator<<(std::ostream &mystream, Rent &rent);
 private:
 	std::string customerID;
-	std::string itemSerial;
+	int itemID;
 	Date date;
 	bool vip;
 	bool dvd;

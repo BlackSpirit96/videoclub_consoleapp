@@ -116,18 +116,19 @@ void loadData(DynamicArray<Customer> &customers, DynamicArray<Game> &games, Dyna
 
 	while(getline(rentsFile, temp))
 	{
-		string customerID, itemSerial;
+		int itemID;
+		string customerID;
 		struct Date date;
 		bool vip, dvd;
 		string type;
 		istringstream line_stream(temp);
 		line_stream>>customerID;
-		line_stream>>itemSerial;
+		line_stream>>itemID;
 		line_stream>>date;
 		line_stream>>vip;
 		line_stream>>dvd;
 		line_stream>>type;
-		rents.insert(Rent(customerID, itemSerial, date, vip, dvd, type));
+		rents.insert(Rent(customerID, itemID, date, vip, dvd, type));
 	}
 }
 
@@ -568,7 +569,8 @@ void customerMenu(DynamicArray<Customer> &customers)
 
 void rentMenu(DynamicArray<Customer> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
-	string customerID, itemSerial;
+	int itemID;
+	string customerID;
 	char choice;
 	while(true)
 	{
@@ -583,43 +585,43 @@ void rentMenu(DynamicArray<Customer> &customers, DynamicArray<Game> &games, Dyna
 		if (choice == '1')
 		{
 			getInput("Enter customer id: ", customerID);
-			getInput("Enter item serial number: ", itemSerial);
-			rents.insert(Rent(customerID, itemSerial, TODAY_DAY, customers.search(customerID)->isVIP(), false, "game"));
-			games.search(itemSerial)->setAvailability(false);
+			getInput("Enter item serial number: ", itemID);
+			rents.insert(Rent(customerID, itemID, TODAY_DAY, customers.search(customerID)->isVIP(), false, "game"));
+			games.search(itemID)->setAvailability(false);
 		}
 		else if (choice == '2')
 		{
 			getInput("Enter customer id: ", customerID);
-			getInput("Enter item serial number: ", itemSerial);
-			rents.insert(Rent(customerID, itemSerial, TODAY_DAY, customers.search(customerID)->isVIP(), movies.search(itemSerial)->isDvd(), "movie"));
-			movies.search(itemSerial)->setAvailability(false);
+			getInput("Enter item serial number: ", itemID);
+			rents.insert(Rent(customerID, itemID, TODAY_DAY, customers.search(customerID)->isVIP(), movies.search(itemID)->isDvd(), "movie"));
+			movies.search(itemID)->setAvailability(false);
 		}
 		else if (choice == '3')
 		{
 			getInput("Enter customer id: ", customerID);
-			getInput("Enter item serial number: ", itemSerial);
-			rents.insert(Rent(customerID, itemSerial, TODAY_DAY, customers.search(customerID)->isVIP(), drama.search(itemSerial)->isDvd(), "drama"));
-			drama.search(itemSerial)->setAvailability(false);
+			getInput("Enter item serial number: ", itemID);
+			rents.insert(Rent(customerID, itemID, TODAY_DAY, customers.search(customerID)->isVIP(), drama.search(itemID)->isDvd(), "drama"));
+			drama.search(itemID)->setAvailability(false);
 		}
 		else if (choice == '4')
 		{
-			string itemSerial;
-			getInput("Enter item serial number: ", itemSerial);
-			Rent *current = rents.search(itemSerial);
+			int itemID;
+			getInput("Enter item: ", itemID);
+			Rent *current = rents.search(itemID);
 			cout<<"Checkout: "<<current->checkout(TODAY_DAY)<<endl;
 			if (current->getType() == "game")
 			{
-				games.search(current->getItemSerial())->setAvailability(true);
+				games.search(current->getItemID())->setAvailability(true);
 			}
 			else if (current->getType() == "movie")
 			{
-				movies.search(current->getItemSerial())->setAvailability(true);
+				movies.search(current->getItemID())->setAvailability(true);
 			}
 			else
 			{
-				drama.search(current->getItemSerial())->setAvailability(true);
+				drama.search(current->getItemID())->setAvailability(true);
 			}
-			rents.remove(itemSerial);
+			rents.remove(itemID);
 		}
 		else if (choice == 'q')
 		{
