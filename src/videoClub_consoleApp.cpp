@@ -203,6 +203,7 @@ void gamesMenu(DynamicArray<Game> &games)
 		cout<<" [3] Update game"<<endl;
 		cout<<" [4] Remove game"<<endl;
 		cout<<" [5] Search available game"<<endl;
+		cout<<" [6] Add new game copy"<<endl;
 		cout<<" [Q] Main Menu"<<endl;
 		getInput("", choice);
 		choice = tolower(choice);
@@ -259,6 +260,19 @@ void gamesMenu(DynamicArray<Game> &games)
 				showAvailable(id, games, Game());
 			}
 		}
+		else if (choice == '6')
+		{
+			cout<<"======< New Game Copy >======"<<endl;
+			int id;
+			string serial;
+			getInput("Enter game id you want to copy: ", id);
+			Game newCopy = *games.search(id);
+			getInput("Enter copy id: ", id);
+			getInput("Enter copy serial: ", serial);
+			newCopy.setId(id);
+			newCopy.setSerial(serial);
+			games.insert(newCopy);
+		}
 		else if (choice == 'q')
 			break;
 	}
@@ -275,6 +289,7 @@ void moviesMenu(DynamicArray<Movie> &movies)
 		cout<<" [3] Update movie"<<endl;
 		cout<<" [4] Remove movie"<<endl;
 		cout<<" [5] Search available movie"<<endl;
+		cout<<" [6] Add new movie copy"<<endl;
 		cout<<" [Q] Main Menu"<<endl;
 		getInput("", choice);
 		choice = tolower(choice);
@@ -331,6 +346,19 @@ void moviesMenu(DynamicArray<Movie> &movies)
 				showAvailable(id, movies, Movie());
 			}
 		}
+		else if (choice == '6')
+		{
+			cout<<"======< New Movie Copy >======"<<endl;
+			int id;
+			string serial;
+			getInput("Enter movie id you want to copy: ", id);
+			Movie newCopy = *movies.search(id);
+			getInput("Enter copy id: ", id);
+			getInput("Enter copy serial: ", serial);
+			newCopy.setId(id);
+			newCopy.setSerial(serial);
+			movies.insert(newCopy);
+		}
 		else if (choice == 'q')
 			break;
 	}
@@ -347,6 +375,7 @@ void dramaMenu(DynamicArray<Drama> &drama)
 		cout<<" [3] Update drama"<<endl;
 		cout<<" [4] Remove drama"<<endl;
 		cout<<" [5] Search available drama"<<endl;
+		cout<<" [6] Add new drama copy"<<endl;
 		cout<<" [Q] Main Menu"<<endl;
 		getInput("", choice);
 		choice = tolower(choice);
@@ -403,6 +432,19 @@ void dramaMenu(DynamicArray<Drama> &drama)
 				showAvailable(id, drama, Drama());
 			}
 		}
+		else if (choice == '6')
+		{
+			cout<<"======< New Drama Copy >======"<<endl;
+			int id;
+			string serial;
+			getInput("Enter drama id you want to copy: ", id);
+			Drama newCopy = *drama.search(id);
+			getInput("Enter copy id: ", id);
+			getInput("Enter copy serial: ", serial);
+			newCopy.setId(id);
+			newCopy.setSerial(serial);
+			drama.insert(newCopy);
+		}
 		else if (choice == 'q')
 			break;
 	}
@@ -416,7 +458,7 @@ void itemMenu(DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArr
 		cout<<"======< Item Menu >======"<<endl;
 		cout<<" [1] Games management"<<endl;
 		cout<<" [2] Movie management"<<endl;
-		cout<<" [3] Series management"<<endl;
+		cout<<" [3] Drama management"<<endl;
 		cout<<" [Q] Main Menu"<<endl;
 		getInput("", choice);
 		choice = tolower(choice);
