@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <limits>
 
 //dataClasses
 #include "data/Rent.h"
@@ -76,7 +77,7 @@ void getInput(string message, T &thing)
     while ( !(cin>>thing) )
     {
       cin.clear();
-      cin.ignore();
+      cin.ignore(numeric_limits<streamsize>::max(), '\n');
       cout << "Incorrect entry. Try again: ";
     }
 }
@@ -105,7 +106,7 @@ void getLine(string message, string &returnStr)
 	while (!getline(cin, returnStr))
 	{
 		cin.clear();
-		cin.ignore();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
 		cout << "Incorrect entry. Try again: ";
 	}
 	convertSpaces(returnStr);

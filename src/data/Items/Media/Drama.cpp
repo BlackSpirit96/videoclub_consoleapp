@@ -38,7 +38,7 @@ void Drama::setSeason(int season)
 ostream& Drama::print(ostream& mystream)
 {
 	Media::print(mystream);
-	mystream<<season<<" "<<episodes;
+	mystream<<" "<<season<<" "<<episodes;
 	return mystream;
 }
 
