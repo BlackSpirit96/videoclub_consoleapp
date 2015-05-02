@@ -18,7 +18,6 @@ public:
     void setCredidCardNumber(string credidCardNumber);
     void setCvv(int cvv);
     void setIssuingNetwork(string issuingNetwork);
-	bool isVIP() { return true;}
 	virtual ostream& print(ostream& mystream);
 	virtual istream& readData(istream &mystream);
 private:

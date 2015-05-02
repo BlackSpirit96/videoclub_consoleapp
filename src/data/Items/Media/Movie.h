@@ -12,7 +12,7 @@ struct time
 
 inline ostream &operator<<(ostream &mystream, struct time &item)
 {
-	return mystream<<item.hours<<":"<<item.minutes<<":"<<item.seconds;
+	return mystream<<item.hours<<" "<<item.minutes<<" "<<item.seconds;
 }
 
 inline istream &operator>>(istream &mystream, struct time &item)

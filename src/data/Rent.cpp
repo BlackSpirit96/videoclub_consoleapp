@@ -2,15 +2,18 @@
 
 Rent::Rent()
 {
+	this->rentID = 0;
 	this->customerID = "";
 	this->itemID = 0;
 	this->date = Date();
 	this->vip = false;
+	this->dvd = false;
 	setType("game");
 }
 
-Rent::Rent(std::string customerID, int itemID, Date date, bool vip, bool dvd, std::string type)
+Rent::Rent(int rentID, std::string customerID, int itemID, Date date, bool vip, bool dvd, std::string type)
 {
+	this->rentID = rentID;
 	this->customerID = customerID;
 	this->itemID = itemID;
 	this->date = date;
@@ -71,7 +74,7 @@ void Rent::setVip(bool vip)
 
 bool Rent::operator==(int itemNum)
 {
-	return itemID == itemNum;
+	return rentID == itemNum;
 }
 
 float Rent::checkout(Date today)
@@ -126,16 +129,17 @@ float Rent::checkout(Date today)
 			cost += cost * 0.5;
 		}
 	}
+
 	if (vip)
 	{
-		cost -= cost * 0.05;
+		cost = cost - cost * 0.05;
 	}
 	return cost;
 }
 
 std::ostream& Rent::print(std::ostream& mystream)
 {
-	return mystream<<customerID<<" "<<itemID<<" "<<date<<" "<<vip<<" "<<type;
+	return mystream<<rentID<<" "<<customerID<<" "<<itemID<<" "<<date<<" "<<vip<<" "<<dvd<<" "<<type;
 }
 
 std::ostream &operator<<(std::ostream &mystream, Rent &rent)
@@ -145,7 +149,7 @@ std::ostream &operator<<(std::ostream &mystream, Rent &rent)
 
 std::istream& Rent::readData(std::istream &mystream)
 {
-	return mystream>>customerID>>itemID>>date>>vip>>type;
+	return mystream>>rentID>>customerID>>itemID>>date>>vip>>dvd>>type;
 }
 
 std::istream &operator>>(std::istream &mystream, Rent &rent)

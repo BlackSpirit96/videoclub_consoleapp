@@ -101,7 +101,7 @@ bool Customer::operator==(string textID)
 
 ostream& Customer::print(ostream& mystream)
 {
-	return mystream<<id<<" "<<firstName<<" "<<lastName<<" "<<dateOfBirth<<" "<<getGender()<<" "<<address<<" "<<phoneNumber;
+	return mystream<<id<<" "<<firstName<<" "<<lastName<<" "<<dateOfBirth<<" "<<getGender()<<" "<<address<<" "<<phoneNumber<<" "<<vip;
 }
 
 ostream &operator<<(ostream &mystream, Customer &client)
@@ -111,10 +111,20 @@ ostream &operator<<(ostream &mystream, Customer &client)
 
 istream& Customer::readData(istream &mystream)
 {
-	return mystream>>id>>firstName>>lastName>>dateOfBirth>>gender>>address>>phoneNumber;
+	return mystream>>id>>firstName>>lastName>>dateOfBirth>>gender>>address>>phoneNumber>>vip;
 }
 
 istream &operator>>(istream &mystream, Customer &client)
 {
 	return client.readData(mystream);
+}
+
+bool Customer::isVIP()
+{
+	return vip;
+}
+
+void Customer::setVIP(bool vipstate)
+{
+	vip = vipstate;
 }

@@ -29,14 +29,14 @@ inline std::istream& operator>>(std::istream &mystream, Date &mydate)
 
 inline std::ostream& operator<<(std::ostream &mystream, Date &mydate)
 {
-	return mystream<<mydate.day<<'/'<<mydate.month<<'/'<<mydate.year;
+	return mystream<<mydate.day<<' '<<mydate.month<<' '<<mydate.year;
 }
 
 class Rent
 {
 public:
 	Rent();
-	Rent(std::string customerID, int itemID, Date date, bool vip, bool dvd, std::string type);
+	Rent(int rentNum, std::string customerID, int itemID, Date date, bool vip, bool dvd, std::string type);
     std::string getCustomerID();
     Date getDate();
     int getItemID();
@@ -48,12 +48,13 @@ public:
     void setType(std::string type);
     void setVip(bool vip);
     float checkout(Date today);
-    bool operator==(int itemNum);
+    bool operator==(int rentNum);
     virtual std::ostream& print(std::ostream& mystream);
     friend std::ostream &operator<<(std::ostream &mystream, Rent &rent);
     virtual std::istream& readData(std::istream &mystream);
     friend std::istream &operator>>(std::istream &mystream, Rent &item);
 private:
+    int rentID;
 	std::string customerID;
 	int itemID;
 	Date date;

@@ -25,7 +25,8 @@ public:
     void setId(string id);
     void setLastName(string lastName);
     void setPhoneNumber(string phoneNumber);
-	virtual bool isVIP() { return vip;}
+	bool isVIP();
+	void setVIP(bool vipstate);
 	bool operator==(string textID);
 	virtual ostream& print(ostream& mystream);
 	friend ostream &operator<<(ostream &mystream, Customer &client);
