@@ -70,16 +70,6 @@ void BaseItem::setYear(int year)
     this->year = year;
 }
 
-ostream& BaseItem::print(ostream& mystream)
-{
-	return mystream<<id<<" "<<title<<" "<<serial<<" "<<genre<<" "<<year<<" "<<availability;
-}
-
-ostream &operator<<(ostream &mystream, BaseItem &item)
-{
-	return item.print(mystream);
-}
-
 bool BaseItem::operator==(int number)
 {
 	return id == number;
@@ -98,4 +88,24 @@ bool BaseItem::isAvailable()
 void BaseItem::setAvailability(bool available)
 {
 	this->availability = available;
+}
+
+ostream& BaseItem::print(ostream& mystream)
+{
+	return mystream<<id<<" "<<title<<" "<<serial<<" "<<genre<<" "<<year<<" "<<availability;
+}
+
+ostream &operator<<(ostream &mystream, BaseItem &item)
+{
+	return item.print(mystream);
+}
+
+istream& BaseItem::readData(istream &mystream)
+{
+	return mystream>>id>>title>>serial>>genre>>year>>availability;
+}
+
+istream &operator>>(istream &mystream, BaseItem &item)
+{
+	return item.readData(mystream);
 }

@@ -18,7 +18,7 @@ using namespace std;
 
 Date TODAY_DAY;
 
-void loadData(DynamicArray<Customer> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
+void loadData(DynamicArray<VIP> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
 	ifstream customersFile("customers.txt");
 	ifstream customersVIPFile("customersvip.txt");
@@ -30,105 +30,42 @@ void loadData(DynamicArray<Customer> &customers, DynamicArray<Game> &games, Dyna
 
 	while (getline(customersFile, temp))
 	{
-		int customerType;
-		string id, firstName, lastName, dateOfBirth, gender, address, phoneNumber;
-		string creditCardNumber, issuingNetwork;
-		int cvv;
 		istringstream line_stream(temp);
-		line_stream>>customerType;
-		line_stream>>id;
-		line_stream>>firstName;
-		line_stream>>lastName;
-		line_stream>>dateOfBirth;
-		line_stream>>gender;
-		line_stream>>address;
-		line_stream>>phoneNumber;
-		if (customerType == 0)
-		{
-			customers.insert(Customer(id, firstName, lastName, dateOfBirth, gender, address, phoneNumber));
-		}
-		else
-		{
-			line_stream>>creditCardNumber;
-			line_stream>>issuingNetwork;
-			line_stream>>cvv;
-			customers.insert(VIP(id, firstName, lastName, dateOfBirth, gender, address, phoneNumber, creditCardNumber, issuingNetwork, cvv));
-		}
+		VIP newCust;
+		line_stream>>newCust;
+		customers.insert(newCust);
 	}
 
 	while (getline(gamesFile, temp))
 	{
-		int id, year;
-		string serial, title, genre, console;
-		bool availability;
 		istringstream line_stream(temp);
-		line_stream>>id;
-		line_stream>>title;
-		line_stream>>serial;
-		line_stream>>genre;
-		line_stream>>year;
-		line_stream>>availability;
-		line_stream>>console;
-		Game newGame(id, serial, title, genre, year, availability, console);
+		Game newGame;
+		line_stream>>newGame;
 		games.insert(newGame);
 	}
 
 	while(getline(moviesFile, temp))
 	{
-		int id, year;
-		string serial, title, genre, director, actors;
-		bool dvd, availability;
-		struct time duration;
 		istringstream line_stream(temp);
-		line_stream>>id;
-		line_stream>>title;
-		line_stream>>serial;
-		line_stream>>genre;
-		line_stream>>year;
-		line_stream>>availability;
-		line_stream>>director;
-		line_stream>>actors;
-		line_stream>>dvd;
-		line_stream>>duration;
-		movies.insert(Movie(id,serial, title, genre, year, availability, director, actors, dvd, duration));
+		Movie newMovie;
+		line_stream>>newMovie;
+		movies.insert(newMovie);
 	}
 
 	while(getline(dramaFile, temp))
 	{
-		int id, year, season;
-		string serial, title, genre, director, actors;
-		struct range episodes;
-		bool dvd, availability;
 		istringstream line_stream(temp);
-		line_stream>>id;
-		line_stream>>title;
-		line_stream>>serial;
-		line_stream>>genre;
-		line_stream>>year;
-		line_stream>>availability;
-		line_stream>>director;
-		line_stream>>actors;
-		line_stream>>dvd;
-		line_stream>>season;
-		line_stream>>episodes;
-		drama.insert(Drama(id, serial, title, genre, year, availability, director, actors, dvd, season, episodes));
+		Drama newDrama;
+		line_stream>>newDrama;
+		drama.insert(newDrama);
 	}
 
 	while(getline(rentsFile, temp))
 	{
-		int itemID;
-		string customerID;
-		struct Date date;
-		bool vip, dvd;
-		string type;
 		istringstream line_stream(temp);
-		line_stream>>customerID;
-		line_stream>>itemID;
-		line_stream>>date;
-		line_stream>>vip;
-		line_stream>>dvd;
-		line_stream>>type;
-		rents.insert(Rent(customerID, itemID, date, vip, dvd, type));
+		Rent newRent;
+		line_stream>>newRent;
+		rents.insert(newRent);
 	}
 }
 
@@ -494,7 +431,7 @@ void itemMenu(DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArr
 	}
 }
 
-void insertCustomer(DynamicArray<Customer> &customers)
+void insertCustomer(DynamicArray<VIP> &customers)
 {
 	string id, firstName, lastName, dateOfBirth, gender, address, phoneNumber;
 	string creditCardNumber, issuingNetwork;
@@ -514,15 +451,15 @@ void insertCustomer(DynamicArray<Customer> &customers)
 		getInput("Enter cradit card number: ", creditCardNumber);
 		getInput("Enter credit card issuing network: ", issuingNetwork);
 		getInput("Enter cradit card cvv number: ", cvv);
-		customers.insert(VIP(id, firstName, lastName, dateOfBirth, gender, address, phoneNumber, creditCardNumber, issuingNetwork, cvv));
+		customers.insert(VIP(id, firstName, lastName, dateOfBirth, gender, address, phoneNumber, true, creditCardNumber, issuingNetwork, cvv));
 	}
 	else
 	{
-		customers.insert(Customer(id, firstName, lastName, dateOfBirth, gender, address, phoneNumber));
+		customers.insert(VIP(id, firstName, lastName, dateOfBirth, gender, address, phoneNumber, false, "", "", 0));
 	}
 }
 
-void customerMenu(DynamicArray<Customer> &customers)
+void customerMenu(DynamicArray<VIP> &customers)
 {
 	while(true)
 	{
@@ -567,7 +504,7 @@ void customerMenu(DynamicArray<Customer> &customers)
 	}
 }
 
-void rentMenu(DynamicArray<Customer> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
+void rentMenu(DynamicArray<VIP> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
 	int itemID;
 	string customerID;
@@ -630,7 +567,7 @@ void rentMenu(DynamicArray<Customer> &customers, DynamicArray<Game> &games, Dyna
 	}
 }
 
-void mainMenu(DynamicArray<Customer> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
+void mainMenu(DynamicArray<VIP> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
 	char choice;
 	while(true)
@@ -653,7 +590,7 @@ void mainMenu(DynamicArray<Customer> &customers, DynamicArray<Game> &games, Dyna
 	}
 }
 
-void saveData(DynamicArray<Customer> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
+void saveData(DynamicArray<VIP> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
 	ofstream customersFile("customers.txt");
 	ofstream gamesFile("games.txt");
@@ -670,7 +607,7 @@ void saveData(DynamicArray<Customer> &customers, DynamicArray<Game> &games, Dyna
 int main() {
 	cout<<"Enter today date(day month year): ";
 	getInput("", TODAY_DAY);
-	DynamicArray<Customer> customers(100);
+	DynamicArray<VIP> customers(100);
 	DynamicArray<Game> games(100);
 	DynamicArray<Movie> movies(100);
 	DynamicArray<Drama> drama(100);

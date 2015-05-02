@@ -7,56 +7,36 @@ Customer::Customer()
 	this->lastName = "";
 	this->dateOfBirth = "";
 	setGender("other");
-	this->adress = "";
+	this->address = "";
 	this->phoneNumber = "";
+	this->vip = 0;
 }
 
-Customer::Customer(string id, string firstName, string lastName, string dateOfBirth, string genderText, string adress, string phoneNumber)
+Customer::Customer(string id, string firstName, string lastName, string dateOfBirth, string genderText, string address, string phoneNumber, bool vip)
 {
 	this->id = id;
 	this->firstName = firstName;
 	this->lastName = lastName;
 	this->dateOfBirth = dateOfBirth;
-	setGender(genderText);
-	this->adress = adress;
+	this->gender = genderText;
+	this->address = address;
 	this->phoneNumber = phoneNumber;
+	this->vip = vip;
 }
 
 void Customer::setGender(string genderText)
 {
-	if (genderText == "male")
-	{
-		this->gender = 'm';
-	}
-	else if (genderText == "female")
-	{
-		this->gender = 'f';
-	}
-	else
-	{
-		this->gender = 'o';
-	}
+	this->gender = genderText;
 }
 
 string Customer::getGender()
 {
-	if (this->gender == 'm')
-	{
-		return "male";
-	}
-	else if (this->gender == 'f')
-	{
-		return "female";
-	}
-	else
-	{
-		return "other";
-	}
+	return gender;
 }
 
-string Customer::getAdress()
+string Customer::getAddress()
 {
-    return adress;
+    return address;
 }
 
 string Customer::getDateOfBirth()
@@ -84,9 +64,9 @@ string Customer::getPhoneNumber()
     return phoneNumber;
 }
 
-void Customer::setAdress(string adress)
+void Customer::setAddress(string adress)
 {
-    this->adress = adress;
+    this->address = address;
 }
 
 void Customer::setDateOfBirth(string dateOfBirth)
@@ -121,7 +101,7 @@ bool Customer::operator==(string textID)
 
 ostream& Customer::print(ostream& mystream)
 {
-	return mystream<<id<<" "<<firstName<<" "<<lastName<<" "<<dateOfBirth<<" "<<getGender()<<" "<<adress<<" "<<phoneNumber;
+	return mystream<<id<<" "<<firstName<<" "<<lastName<<" "<<dateOfBirth<<" "<<getGender()<<" "<<address<<" "<<phoneNumber;
 }
 
 ostream &operator<<(ostream &mystream, Customer &client)
@@ -129,3 +109,12 @@ ostream &operator<<(ostream &mystream, Customer &client)
 	return client.print(mystream);
 }
 
+istream& Customer::readData(istream &mystream)
+{
+	return mystream>>id>>firstName>>lastName>>dateOfBirth>>gender>>address>>phoneNumber;
+}
+
+istream &operator>>(istream &mystream, Customer &client)
+{
+	return client.readData(mystream);
+}

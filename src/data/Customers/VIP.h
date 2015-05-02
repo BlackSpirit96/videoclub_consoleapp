@@ -10,7 +10,7 @@ public:
 	VIP(string id, string firstName,
 			string lastName, string dateOfBirth,
 			string genderText, string adress,
-			string phoneNumber, string credidCardNumber,
+			string phoneNumber, bool vip, string credidCardNumber,
 			string issuingNetwork, int cvv);
     string getCredidCardNumber();
     int getCvv();
@@ -20,6 +20,7 @@ public:
     void setIssuingNetwork(string issuingNetwork);
 	bool isVIP() { return true;}
 	virtual ostream& print(ostream& mystream);
+	virtual istream& readData(istream &mystream);
 private:
 	string credidCardNumber;
 	string issuingNetwork;
