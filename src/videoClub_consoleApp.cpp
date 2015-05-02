@@ -73,7 +73,7 @@ template <class T>
 void getInput(string message, T &thing)
 {
 	cout<<message;
-    if ( !(cin>>thing) )
+    while ( !(cin>>thing) )
     {
       cin.clear();
       cin.ignore();
@@ -102,7 +102,7 @@ void getLine(string message, string &returnStr)
 {
 	cout<<message;
 	cin.ignore();
-	if (!getline(cin, returnStr))
+	while (!getline(cin, returnStr))
 	{
 		cin.clear();
 		cin.ignore();
@@ -181,15 +181,14 @@ void insertDrama(DynamicArray<Drama> &drama)
 template <typename A, class B, class C>
 void showAvailable(A id, B &list, C type)
 {
-	C *table;
-	int tableSize = 0;
-	list.returnSearch(id, table, tableSize);
+	int tableSize = list.getLength();
+	C item;
 	for (int i = 0; i < tableSize; i++)
 	{
-		if (table[i].isAvailable())
-			cout<<table[i];
+		list.access(i, item);
+		if( item.isAvailable())
+			cout<<item<<endl;
 	}
-	return;
 }
 
 void gamesMenu(DynamicArray<Game> &games)
