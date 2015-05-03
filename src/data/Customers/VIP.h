@@ -3,6 +3,10 @@
 
 #include "../Customer.h"
 
+/*
+ * class VIP
+ * stores VIP customers data
+ */
 class VIP: public Customer
 {
 public:
@@ -20,7 +24,10 @@ public:
     void setIssuingNetwork(string issuingNetwork);
 	virtual ostream& print(ostream& mystream);
 	virtual istream& readData(istream &mystream);
+	void setVIP(bool vip);
+	bool isVIP();
 private:
+	bool vip;
 	string credidCardNumber;
 	string issuingNetwork;
 	int cvv;

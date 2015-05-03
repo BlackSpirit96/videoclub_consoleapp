@@ -17,8 +17,10 @@
 
 using namespace std;
 
-Date TODAY_DAY;
+Date TODAY_DAY; // stores today_day and used when making a new rent
 
+// loadData()
+// used to load state of the program
 void loadData(DynamicArray<VIP> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
 	ifstream customersFile("customers.txt");
@@ -70,6 +72,9 @@ void loadData(DynamicArray<VIP> &customers, DynamicArray<Game> &games, DynamicAr
 	}
 }
 
+// getInput()
+// prompts the user to insert a value
+// and checks if it was successful
 template <class T>
 void getInput(string message, T &thing)
 {
@@ -82,6 +87,8 @@ void getInput(string message, T &thing)
     }
 }
 
+// convertSpaces()
+// used to convert ' ' to '-'
 void convertSpaces(string &text)
 {
 	for (unsigned int i = 0; i < text.length(); i++)
@@ -91,6 +98,8 @@ void convertSpaces(string &text)
 	}
 }
 
+// toLower()
+// used to lowercase all chars on a string
 void toLower(string &text)
 {
 	for (unsigned int i = 0; i < text.length(); i++)
@@ -99,6 +108,9 @@ void toLower(string &text)
 	}
 }
 
+// getLine()
+// used to prompt the user and get the input as a line
+// and store it in a string
 void getLine(string message, string &returnStr)
 {
 	cout<<message;
@@ -112,6 +124,8 @@ void getLine(string message, string &returnStr)
 	convertSpaces(returnStr);
 }
 
+// getInput()
+// promts a user for a <y/n> question
 bool getInput(string message)
 {
 	char choice;
@@ -127,6 +141,8 @@ bool getInput(string message)
 		return false;
 }
 
+// insertGame()
+// insert Game item into games list
 void insertGame(DynamicArray<Game> &games)
 {
 	int id, year;
@@ -141,6 +157,8 @@ void insertGame(DynamicArray<Game> &games)
 	games.insert(newGame);
 }
 
+// insertMovie()
+// insert Movie item into movies list
 void insertMovie(DynamicArray<Movie> &movies)
 {
 	int id, year;
@@ -160,6 +178,8 @@ void insertMovie(DynamicArray<Movie> &movies)
 	return;
 }
 
+// insertDrama()
+// insert Drama item into drama list
 void insertDrama(DynamicArray<Drama> &drama)
 {
 	int id, year, season;
@@ -179,6 +199,10 @@ void insertDrama(DynamicArray<Drama> &drama)
 	drama.insert(Drama(id, serial, title, genre, year, true, director, actors, dvd, season, episodes));
 }
 
+// showAvailable()
+// search for <A> id
+// in <B> list
+// for <C> type item
 template <typename A, class B, class C>
 void showAvailable(A id, B &list, C type)
 {
@@ -192,6 +216,7 @@ void showAvailable(A id, B &list, C type)
 	}
 }
 
+// The user friendly gamesMenu
 void gamesMenu(DynamicArray<Game> &games)
 {
 	char choice;
@@ -278,6 +303,7 @@ void gamesMenu(DynamicArray<Game> &games)
 	}
 }
 
+// The user friendly moviesMenu
 void moviesMenu(DynamicArray<Movie> &movies)
 {
 	char choice;
@@ -364,6 +390,7 @@ void moviesMenu(DynamicArray<Movie> &movies)
 	}
 }
 
+// The user friendly dramaMenu
 void dramaMenu(DynamicArray<Drama> &drama)
 {
 	char choice;
@@ -450,6 +477,7 @@ void dramaMenu(DynamicArray<Drama> &drama)
 	}
 }
 
+// The user friendly itemMenu
 void itemMenu(DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama)
 {
 	char choice;
@@ -473,6 +501,8 @@ void itemMenu(DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArr
 	}
 }
 
+// insertCustomer()
+// insert customer type into customers list
 void insertCustomer(DynamicArray<VIP> &customers)
 {
 	string id, firstName, lastName, dateOfBirth, gender, address, phoneNumber;
@@ -501,6 +531,7 @@ void insertCustomer(DynamicArray<VIP> &customers)
 	}
 }
 
+// The user friendly customersMenu
 void customerMenu(DynamicArray<VIP> &customers)
 {
 	while(true)
@@ -546,6 +577,7 @@ void customerMenu(DynamicArray<VIP> &customers)
 	}
 }
 
+// The user friendly renntMenu
 void rentMenu(DynamicArray<VIP> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
 	int itemID, rentID;
@@ -634,6 +666,7 @@ void rentMenu(DynamicArray<VIP> &customers, DynamicArray<Game> &games, DynamicAr
 	}
 }
 
+// The user friendly mainMenu
 void mainMenu(DynamicArray<VIP> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
 	char choice;
@@ -657,6 +690,8 @@ void mainMenu(DynamicArray<VIP> &customers, DynamicArray<Game> &games, DynamicAr
 	}
 }
 
+// saveData()
+// save program state before clossing into files
 void saveData(DynamicArray<VIP> &customers, DynamicArray<Game> &games, DynamicArray<Movie> &movies, DynamicArray<Drama> &drama, DynamicArray<Rent> &rents)
 {
 	ofstream customersFile("customers.txt");
@@ -671,6 +706,7 @@ void saveData(DynamicArray<VIP> &customers, DynamicArray<Game> &games, DynamicAr
 	rents.outputData(rentsFile);
 }
 
+// main()
 int main() {
 	cout<<"Enter today date(day month year): ";
 	getInput("", TODAY_DAY);

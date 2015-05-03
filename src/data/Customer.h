@@ -6,11 +6,15 @@
 
 using namespace std;
 
+/*
+ * class Customer
+ * stores customers data
+ */
 class Customer
 {
 public:
 	Customer();
-	Customer(string id, string firstName, string lastName, string dateOfBirth, string genderText, string address, string phoneNumber, bool vip);
+	Customer(string id, string firstName, string lastName, string dateOfBirth, string genderText, string address, string phoneNumber);
     string getAddress();
     string getDateOfBirth();
     string getFirstName();
@@ -25,8 +29,6 @@ public:
     void setId(string id);
     void setLastName(string lastName);
     void setPhoneNumber(string phoneNumber);
-	bool isVIP();
-	void setVIP(bool vipstate);
 	bool operator==(string textID);
 	virtual ostream& print(ostream& mystream);
 	friend ostream &operator<<(ostream &mystream, Customer &client);
@@ -40,7 +42,6 @@ private:
 	string gender;
 	string address;
 	string phoneNumber;
-	bool vip;
 };
 
 #endif /* CUSTOMER_H_ */

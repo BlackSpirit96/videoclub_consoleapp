@@ -5,6 +5,13 @@
 #include <iostream>
 #include <fstream>
 
+
+/*
+ * A dynamic array class
+ * used to store all the items
+ * and customers lists on the program
+ */
+
 template <class T>
 class DynamicArray
 {
@@ -29,6 +36,8 @@ public:
 	bool access(int pos, T &item);
 };
 
+// DynamicArray(int size)
+// set up array @size
 template <class T>
 DynamicArray<T>::DynamicArray(int size)
 {
@@ -37,12 +46,20 @@ DynamicArray<T>::DynamicArray(int size)
 	this->length = 0;
 }
 
+/*
+ * ~DynamicArray()
+ * deconstructor
+ */
 template <class T>
 DynamicArray<T>::~DynamicArray()
 {
 	delete[] data;
 }
 
+/*
+ * insert(T value)
+ * insert @value into table
+ */
 template <class T>
 bool DynamicArray<T>::insert(T value)
 {
@@ -64,6 +81,11 @@ bool DynamicArray<T>::insert(T value)
 	}
 }
 
+/*
+ * remove(std::string id)
+ * removes the item that meets
+ * data[i] == id
+ */
 template <class T>
 bool DynamicArray<T>::remove(std::string id)
 {
@@ -83,6 +105,11 @@ bool DynamicArray<T>::remove(std::string id)
 	return flag;
 }
 
+/*
+ * remove(int id)
+ * removes the item that meets
+ * data[i] == id
+ */
 template <class T>
 bool DynamicArray<T>::remove(int id)
 {
@@ -102,6 +129,11 @@ bool DynamicArray<T>::remove(int id)
 	return flag;
 }
 
+/*
+ * search(int id)
+ * search table for
+ * data[i] == id
+ */
 template <class T>
 T* DynamicArray<T>::search(int id)
 {
@@ -115,6 +147,11 @@ T* DynamicArray<T>::search(int id)
 	return 0;
 }
 
+/*
+ * search(std::string id)
+ * search table for
+ * data[i] == id
+ */
 template <class T>
 T* DynamicArray<T>::search(std::string title)
 {
@@ -128,6 +165,10 @@ T* DynamicArray<T>::search(std::string title)
 	return 0;
 }
 
+/*
+ * print()
+ * output table in std::cout
+ */
 template <class T>
 void DynamicArray<T>::print()
 {
@@ -137,6 +178,10 @@ void DynamicArray<T>::print()
 	}
 }
 
+/*
+ * outputData(ofstream &stream)
+ * output Table in stream
+ */
 template <class T>
 void DynamicArray<T>::outputData(ofstream &stream)
 {
@@ -146,6 +191,10 @@ void DynamicArray<T>::outputData(ofstream &stream)
 	}
 }
 
+/*
+ *  printSearch(int id)
+ *  search and output results
+ */
 template <class T>
 void DynamicArray<T>::printSearch(int id)
 {
@@ -156,6 +205,10 @@ void DynamicArray<T>::printSearch(int id)
 	}
 }
 
+/*
+ *  printSearch(std::string id)
+ *  search and output results
+ */
 template <class T>
 void DynamicArray<T>::printSearch(string id)
 {
@@ -166,6 +219,10 @@ void DynamicArray<T>::printSearch(string id)
 	}
 }
 
+/*
+ * access(int pos,T &item)
+ * return @item from @pos
+ */
 template <class T>
 bool DynamicArray<T>::access(int pos,T &item)
 {
@@ -177,6 +234,10 @@ bool DynamicArray<T>::access(int pos,T &item)
 	return false;
 }
 
+/*
+ * memoryAllocation(int allocSize)
+ * allocates @allocSize memory when needed
+ */
 template <class T>
 bool DynamicArray<T>::memoryAllocation(int allocSize)
 {

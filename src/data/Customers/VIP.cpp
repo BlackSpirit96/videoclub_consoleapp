@@ -3,6 +3,7 @@
 VIP::VIP()
 : Customer()
 {
+	this->vip = false;
 	this->credidCardNumber = "";
 	this->issuingNetwork = "";
 	this->cvv = 0;
@@ -12,8 +13,9 @@ VIP::VIP(string id, string firstName,
 		string lastName, string dateOfBirth,
 		string genderText, string adress,
 		string phoneNumber, bool vip, string credidCardNumber,
-		string issuingNetwork, int cvv) : Customer(id, firstName, lastName, dateOfBirth, genderText, adress, phoneNumber, vip)
+		string issuingNetwork, int cvv) : Customer(id, firstName, lastName, dateOfBirth, genderText, adress, phoneNumber)
 {
+	this->vip = vip;
 	this->credidCardNumber = credidCardNumber;
 	this->issuingNetwork = issuingNetwork;
 	this->cvv = cvv;
@@ -52,11 +54,22 @@ void VIP::setIssuingNetwork(string issuingNetwork)
 ostream& VIP::print(ostream& mystream)
 {
 	Customer::print(mystream);
-	mystream<<" "<<credidCardNumber<<" "<<issuingNetwork<<" "<<cvv;
+	mystream<<" "<<vip<<" "<<credidCardNumber<<" "<<issuingNetwork<<" "<<cvv;
 	return mystream;
 }
 
 istream& VIP::readData(istream &mystream)
 {
-	return Customer::readData(mystream)>>credidCardNumber>>issuingNetwork>>cvv;
+	return Customer::readData(mystream)>>vip>>credidCardNumber>>issuingNetwork>>cvv;
 }
+
+bool VIP::isVIP()
+{
+	return vip;
+}
+
+void VIP::setVIP(bool vip)
+{
+	this->vip = vip;
+}
+

@@ -3,6 +3,10 @@
 
 #include "../Media.h"
 
+/*
+ * struct time
+ * stores time format
+ */
 struct time
 {
 	int hours;
@@ -20,6 +24,10 @@ inline istream &operator>>(istream &mystream, struct time &item)
 	return mystream>>item.hours>>item.minutes>>item.seconds;
 }
 
+/*
+ * class Movie
+ * stores Movie item data
+ */
 class Movie: public Media
 {
 public:

@@ -4,6 +4,10 @@
 #include "../BaseItem.h"
 #include <string>
 
+/*
+ * class Game
+ * stores Game item data
+ */
 class Game: public BaseItem
 {
 public:

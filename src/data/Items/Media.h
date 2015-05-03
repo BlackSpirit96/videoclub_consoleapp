@@ -4,6 +4,10 @@
 #include "../BaseItem.h"
 #include <string>
 
+/*
+ * class Media
+ * stores basic Media type data
+ */
 class Media: public BaseItem
 {
 public:

@@ -5,6 +5,10 @@
 #include <iostream>
 using namespace std;
 
+/*
+ * class BaseItem
+ * stores item basic data
+ */
 class BaseItem
 {
 public:

@@ -3,6 +3,10 @@
 
 #include "../Media.h"
 
+/*
+ * struct range
+ * stores range format
+ */
 struct range
 {
 	int start;
@@ -19,6 +23,10 @@ inline istream &operator>>(istream &mystream, struct range &item)
 	return mystream>>item.start>>item.end;
 }
 
+/*
+ * class Drama
+ * stores Drama item type data
+ */
 class Drama: public Media
 {
 public:

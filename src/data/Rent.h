@@ -4,6 +4,10 @@
 #include <iostream>
 #include <string>
 
+/*
+ * class Date
+ * used to store date format
+ */
 class Date
 {
 public:
@@ -32,6 +36,10 @@ inline std::ostream& operator<<(std::ostream &mystream, Date &mydate)
 	return mystream<<mydate.day<<' '<<mydate.month<<' '<<mydate.year;
 }
 
+/*
+ * class Rent
+ * used to store rents
+ */
 class Rent
 {
 public:
@@ -47,7 +55,7 @@ public:
     bool getVip();
     void setType(std::string type);
     void setVip(bool vip);
-    float checkout(Date today);
+    float checkout(Date today); // return the price the customer has to pay for the rent
     bool operator==(int rentNum);
     virtual std::ostream& print(std::ostream& mystream);
     friend std::ostream &operator<<(std::ostream &mystream, Rent &rent);

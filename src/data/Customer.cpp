@@ -9,10 +9,9 @@ Customer::Customer()
 	setGender("other");
 	this->address = "";
 	this->phoneNumber = "";
-	this->vip = 0;
 }
 
-Customer::Customer(string id, string firstName, string lastName, string dateOfBirth, string genderText, string address, string phoneNumber, bool vip)
+Customer::Customer(string id, string firstName, string lastName, string dateOfBirth, string genderText, string address, string phoneNumber)
 {
 	this->id = id;
 	this->firstName = firstName;
@@ -21,7 +20,6 @@ Customer::Customer(string id, string firstName, string lastName, string dateOfBi
 	this->gender = genderText;
 	this->address = address;
 	this->phoneNumber = phoneNumber;
-	this->vip = vip;
 }
 
 void Customer::setGender(string genderText)
@@ -101,7 +99,7 @@ bool Customer::operator==(string textID)
 
 ostream& Customer::print(ostream& mystream)
 {
-	return mystream<<id<<" "<<firstName<<" "<<lastName<<" "<<dateOfBirth<<" "<<getGender()<<" "<<address<<" "<<phoneNumber<<" "<<vip;
+	return mystream<<id<<" "<<firstName<<" "<<lastName<<" "<<dateOfBirth<<" "<<getGender()<<" "<<address<<" "<<phoneNumber;
 }
 
 ostream &operator<<(ostream &mystream, Customer &client)
@@ -111,20 +109,10 @@ ostream &operator<<(ostream &mystream, Customer &client)
 
 istream& Customer::readData(istream &mystream)
 {
-	return mystream>>id>>firstName>>lastName>>dateOfBirth>>gender>>address>>phoneNumber>>vip;
+	return mystream>>id>>firstName>>lastName>>dateOfBirth>>gender>>address>>phoneNumber;
 }
 
 istream &operator>>(istream &mystream, Customer &client)
 {
 	return client.readData(mystream);
-}
-
-bool Customer::isVIP()
-{
-	return vip;
-}
-
-void Customer::setVIP(bool vipstate)
-{
-	vip = vipstate;
 }
