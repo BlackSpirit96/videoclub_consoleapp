@@ -57,6 +57,7 @@ public:
     void setVip(bool vip);
     float checkout(Date today); // return the price the customer has to pay for the rent
     bool operator==(int rentNum);
+    bool operator==(Rent &item);
     virtual std::ostream& print(std::ostream& mystream);
     friend std::ostream &operator<<(std::ostream &mystream, Rent &rent);
     virtual std::istream& readData(std::istream &mystream);

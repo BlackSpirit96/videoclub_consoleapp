@@ -26,6 +26,7 @@ public:
 	bool insert(T value);
 	bool remove(int id);
 	bool remove(std::string id);
+	bool contains(T &item);
 	T* search(int id);
 	T* search(std::string title);
 	int getLength() {return length;}
@@ -63,6 +64,11 @@ DynamicArray<T>::~DynamicArray()
 template <class T>
 bool DynamicArray<T>::insert(T value)
 {
+	if(contains(value))
+	{
+		std::cout<<value<<std::endl<<"Already in list!";
+		return false;
+	}
 	bool flag = true;
 	if (length == size)
 	{
@@ -127,6 +133,19 @@ bool DynamicArray<T>::remove(int id)
 		}
 	}
 	return flag;
+}
+
+template <class T>
+bool DynamicArray<T>::contains(T &item)
+{
+	for(int i = 0; i < length; i++)
+	{
+		if (data[i] == item)
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 /*

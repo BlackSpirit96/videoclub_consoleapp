@@ -30,6 +30,7 @@ public:
     friend istream &operator>>(istream &mystream, BaseItem &item);
     bool operator==(int number);
     bool operator==(string text);
+    bool operator==(BaseItem &item);
     bool isAvailable();
     void setAvailability(bool available);
 private:

@@ -30,6 +30,7 @@ public:
     void setLastName(string lastName);
     void setPhoneNumber(string phoneNumber);
 	bool operator==(string textID);
+	bool operator==(Customer &client);
 	virtual ostream& print(ostream& mystream);
 	friend ostream &operator<<(ostream &mystream, Customer &client);
 	virtual istream& readData(istream &mystream);

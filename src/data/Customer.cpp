@@ -97,6 +97,11 @@ bool Customer::operator==(string textID)
 	return id == textID;
 }
 
+bool Customer::operator==(Customer &client)
+{
+	return this->id == client.getId();
+}
+
 ostream& Customer::print(ostream& mystream)
 {
 	return mystream<<id<<" "<<firstName<<" "<<lastName<<" "<<dateOfBirth<<" "<<getGender()<<" "<<address<<" "<<phoneNumber;

@@ -156,3 +156,8 @@ std::istream &operator>>(std::istream &mystream, Rent &rent)
 {
 	return rent.readData(mystream);
 }
+
+bool Rent::operator ==(Rent &item)
+{
+	return this->customerID == item.getCustomerID() && this->itemID == item.getItemID();
+}
