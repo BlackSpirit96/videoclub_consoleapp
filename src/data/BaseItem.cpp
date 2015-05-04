@@ -82,7 +82,7 @@ bool BaseItem::operator==(string text)
 
 bool BaseItem::operator==(BaseItem &item)
 {
-	return this->id == item.getId() && this->serial == item.getSerial();
+	return this->id == item.getId() || this->serial == item.getSerial();
 }
 
 bool BaseItem::isAvailable()
